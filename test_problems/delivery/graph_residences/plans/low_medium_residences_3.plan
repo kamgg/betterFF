@@ -1,0 +1,32 @@
+;;;; Solution Found and Proved Optimal
+; Time 2.14
+; Peak memory 77360kb
+; Nodes Generated: 18368
+; Nodes Expanded:  10109
+; Nodes Evaluated: 11537
+; Nodes Tunneled:  5633
+; Metric value 51.25
+0.001: (accept_order residence0 man) [0.001] ; (8)
+0.001: (accept_order residence1 man) [0.001] ; (9)
+0.001: (accept_order residence2 man) [0.001] ; (10)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (19)
+1.252: (walk residence0 residence1 man) [10.000] ; (4)
+11.253: (walk residence1 superstore0 man) [10.000] ; (7)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.257: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.258: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.259: (pick_up_supply superstore0 man) [0.001] ; (17)
+21.260: (walk superstore0 residence1 man) [10.000] ; (5)
+31.261: (drop_supply residence1 man) [0.001] ; (15)
+31.262: (drop_supply residence1 man) [0.001] ; (15)
+31.263: (walk residence1 residence0 man) [10.000] ; (2)
+31.263: (take_payment man residence1) [0.001] ; (12)
+41.264: (drop_supply residence0 man) [0.001] ; (14)
+41.265: (drop_supply residence0 man) [0.001] ; (14)
+41.266: (walk residence0 residence2 man) [10.000] ; (6)
+41.266: (take_payment man residence0) [0.001] ; (11)
+51.267: (drop_supply residence2 man) [0.001] ; (16)
+51.268: (drop_supply residence2 man) [0.001] ; (16)
+51.269: (take_payment man residence2) [0.001] ; (13)

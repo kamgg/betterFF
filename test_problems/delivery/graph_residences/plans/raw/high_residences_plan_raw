@@ -1,0 +1,562 @@
+One way facts...
+Mutex groups...
+Semaphore Facts...
+Envelope Facts...
+One-shot actions...
+(accept_order residence0 man) is 1 shot
+(accept_order residence1 man) is 1 shot
+(accept_order residence2 man) is 1 shot
+(accept_order residence3 man) is 1 shot
+(accept_order residence4 man) is 1 shot
+(accept_order residence5 man) is 1 shot
+(take_payment man residence0) is 1 shot
+(take_payment man residence1) is 1 shot
+(take_payment man residence2) is 1 shot
+(take_payment man residence3) is 1 shot
+(take_payment man residence4) is 1 shot
+(take_payment man residence5) is 1 shot
+Integral variables...
+Variable bounds...
+Static numeric conditions...
+Duration bounds...
+Dominance constraints (excluding processes and events)...
+Damaging events...
+Dominance constraints (including processes and events)...
+Max/min needed values for any single precondition...
+Dependencies from NumericFluents to the conditions and effects that use them...
+Irrelevant action pruning by backward reachability from goal...
+Uninterestingness criteria...
+Compression-safe actions...
+Compression-safe invariants...
+0% of durative actions in this problem are compression safe
+Finishing preprocessing.  Making a TRPG heuristic...
+Making an open list...
+Running WA* search (g weight = 1, h weight = 5)
+Initial heuristic = 47
+Initial stats: t=0.05s, 8360kb
+b (46 @ n=3, t=0.05s, 8360kb)b (45 @ n=11, t=0.05s, 8360kb)b (44 @ n=18, t=0.05s, 8360kb)b (43 @ n=24, t=0.05s, 8360kb)b (42 @ n=29, t=0.06s, 8360kb)b (41 @ n=33, t=0.06s, 8360kb)b (40 @ n=36, t=0.06s, 8360kb)b (39 @ n=76, t=0.06s, 8492kb)b (38 @ n=84, t=0.06s, 8492kb)b (37 @ n=85, t=0.06s, 8492kb)b (35 @ n=111, t=0.07s, 8608kb)b (34 @ n=112, t=0.07s, 8608kb)b (33 @ n=115, t=0.07s, 8608kb)b (32 @ n=123, t=0.07s, 8608kb).....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................b (31 @ n=96547, t=21.24s, 403060kb)..x.........x.................................................................................................................................................................b (30 @ n=113794, t=25.12s, 479100kb)b (28 @ n=113796, t=25.12s, 479100kb)....b (26 @ n=114363, t=25.25s, 482480kb)..................................b (25 @ n=120080, t=26.76s, 521432kb).................................................................................................................b (24 @ n=132832, t=30.48s, 622056kb)b (22 @ n=132834, t=30.48s, 622056kb).b (20 @ n=133147, t=30.58s, 625048kb)................b (19 @ n=135912, t=31.47s, 655632kb).....................................b (18 @ n=140802, t=33.19s, 716692kb)b (16 @ n=140804, t=33.19s, 716692kb)b (14 @ n=140947, t=33.24s, 718884kb)......b (13 @ n=142012, t=33.67s, 736400kb)...........................................b (12 @ n=150213, t=37.23s, 887248kb)..........b (11 @ n=152019, t=38.04s, 923652kb)b (9 @ n=152021, t=38.05s, 923652kb)b (7 @ n=152078, t=38.07s, 925020kb)..b (6 @ n=152407, t=38.24s, 933256kb).......b (5 @ n=154389, t=39.36s, 987792kb)........b (4 @ n=156439, t=40.54s, 1048980kb).b (3 @ n=156768, t=40.78s, 1059812kb).......b (2 @ n=158750, t=42.17s, 1130288kb)b (1 @ n=158757, t=42.17s, 1130556kb)
+;;;; Solution Found
+; Time 42.18
+; Peak memory 1130832kb
+; Nodes Generated: 158763
+; Nodes Expanded:  50529
+; Nodes Evaluated: 158763
+; Nodes Tunneled:  53350
+; Metric value 321.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+31.259: (take_payment man residence1) [0.001] ; (21)
+41.260: (walk residence0 residence3 man) [10.000] ; (10)
+51.261: (drop_supply residence3 man) [0.001] ; (29)
+51.262: (drop_supply residence3 man) [0.001] ; (29)
+51.263: (walk residence3 residence0 man) [10.000] ; (4)
+51.263: (take_payment man residence3) [0.001] ; (23)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (walk residence1 residence0 man) [10.000] ; (2)
+101.271: (walk residence0 residence2 man) [10.000] ; (9)
+111.272: (drop_supply residence2 man) [0.001] ; (28)
+111.273: (drop_supply residence2 man) [0.001] ; (28)
+111.274: (drop_supply residence2 man) [0.001] ; (28)
+111.275: (walk residence2 residence0 man) [10.000] ; (3)
+111.275: (take_payment man residence2) [0.001] ; (22)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (drop_supply residence4 man) [0.001] ; (30)
+171.287: (walk residence4 residence0 man) [10.000] ; (5)
+171.287: (take_payment man residence4) [0.001] ; (24)
+181.288: (walk residence0 residence1 man) [10.000] ; (7)
+191.289: (walk residence1 superstore0 man) [10.000] ; (13)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.292: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.293: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.294: (walk superstore0 residence1 man) [10.000] ; (8)
+211.295: (walk residence1 residence0 man) [10.000] ; (2)
+221.296: (walk residence0 residence5 man) [10.000] ; (12)
+231.297: (drop_supply residence5 man) [0.001] ; (31)
+231.298: (drop_supply residence5 man) [0.001] ; (31)
+231.299: (drop_supply residence5 man) [0.001] ; (31)
+231.300: (drop_supply residence5 man) [0.001] ; (31)
+231.301: (walk residence5 residence0 man) [10.000] ; (6)
+231.301: (take_payment man residence5) [0.001] ; (25)
+241.302: (walk residence0 residence1 man) [10.000] ; (7)
+251.303: (walk residence1 superstore0 man) [10.000] ; (13)
+261.304: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.305: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.306: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.307: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.308: (walk superstore0 residence1 man) [10.000] ; (8)
+271.309: (walk residence1 residence0 man) [10.000] ; (2)
+281.310: (drop_supply residence0 man) [0.001] ; (26)
+281.311: (drop_supply residence0 man) [0.001] ; (26)
+281.312: (drop_supply residence0 man) [0.001] ; (26)
+281.313: (walk residence0 residence1 man) [10.000] ; (7)
+291.314: (walk residence1 superstore0 man) [10.000] ; (13)
+301.315: (pick_up_supply superstore0 man) [0.001] ; (32)
+301.316: (pick_up_supply superstore0 man) [0.001] ; (32)
+301.317: (pick_up_supply superstore0 man) [0.001] ; (32)
+301.318: (walk superstore0 residence1 man) [10.000] ; (8)
+311.319: (walk residence1 residence0 man) [10.000] ; (2)
+321.320: (drop_supply residence0 man) [0.001] ; (26)
+321.321: (drop_supply residence0 man) [0.001] ; (26)
+321.322: (drop_supply residence0 man) [0.001] ; (26)
+321.323: (drop_supply residence0 man) [0.001] ; (26)
+321.324: (take_payment man residence0) [0.001] ; (20)
+.................
+;;;; Solution Found
+; Time 44.17
+; Peak memory 1258124kb
+; Nodes Generated: 162852
+; Nodes Expanded:  51364
+; Nodes Evaluated: 159698
+; Nodes Tunneled:  55023
+; Metric value 281.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+31.259: (take_payment man residence1) [0.001] ; (21)
+41.260: (walk residence0 residence3 man) [10.000] ; (10)
+51.261: (drop_supply residence3 man) [0.001] ; (29)
+51.262: (drop_supply residence3 man) [0.001] ; (29)
+51.263: (walk residence3 residence0 man) [10.000] ; (4)
+51.263: (take_payment man residence3) [0.001] ; (23)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (walk residence1 residence0 man) [10.000] ; (2)
+101.271: (walk residence0 residence2 man) [10.000] ; (9)
+111.272: (drop_supply residence2 man) [0.001] ; (28)
+111.273: (drop_supply residence2 man) [0.001] ; (28)
+111.274: (drop_supply residence2 man) [0.001] ; (28)
+111.275: (walk residence2 residence0 man) [10.000] ; (3)
+111.275: (take_payment man residence2) [0.001] ; (22)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (drop_supply residence4 man) [0.001] ; (30)
+171.287: (walk residence4 residence0 man) [10.000] ; (5)
+171.287: (take_payment man residence4) [0.001] ; (24)
+181.288: (walk residence0 residence1 man) [10.000] ; (7)
+191.289: (walk residence1 superstore0 man) [10.000] ; (13)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.292: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.293: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.294: (walk superstore0 residence1 man) [10.000] ; (8)
+211.295: (walk residence1 residence0 man) [10.000] ; (2)
+221.296: (walk residence0 residence5 man) [10.000] ; (12)
+231.297: (drop_supply residence5 man) [0.001] ; (31)
+231.298: (drop_supply residence5 man) [0.001] ; (31)
+231.299: (drop_supply residence5 man) [0.001] ; (31)
+231.300: (drop_supply residence5 man) [0.001] ; (31)
+231.301: (walk residence5 residence0 man) [10.000] ; (6)
+231.301: (take_payment man residence5) [0.001] ; (25)
+241.302: (walk residence0 residence1 man) [10.000] ; (7)
+251.303: (walk residence1 superstore0 man) [10.000] ; (13)
+261.304: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.305: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.306: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.307: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.308: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.309: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.310: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.311: (walk superstore0 residence1 man) [10.000] ; (8)
+271.312: (walk residence1 residence0 man) [10.000] ; (2)
+281.313: (drop_supply residence0 man) [0.001] ; (26)
+281.314: (drop_supply residence0 man) [0.001] ; (26)
+281.315: (drop_supply residence0 man) [0.001] ; (26)
+281.316: (drop_supply residence0 man) [0.001] ; (26)
+281.317: (drop_supply residence0 man) [0.001] ; (26)
+281.318: (drop_supply residence0 man) [0.001] ; (26)
+281.319: (drop_supply residence0 man) [0.001] ; (26)
+281.320: (take_payment man residence0) [0.001] ; (20)
+.x..........................x...................x................................
+;;;; Solution Found
+; Time 50.58
+; Peak memory 1645428kb
+; Nodes Generated: 180575
+; Nodes Expanded:  55284
+; Nodes Evaluated: 164548
+; Nodes Tunneled:  61766
+; Metric value 271.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+31.259: (take_payment man residence1) [0.001] ; (21)
+41.260: (walk residence0 residence3 man) [10.000] ; (10)
+51.261: (drop_supply residence3 man) [0.001] ; (29)
+51.262: (drop_supply residence3 man) [0.001] ; (29)
+51.263: (walk residence3 residence0 man) [10.000] ; (4)
+51.263: (take_payment man residence3) [0.001] ; (23)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (walk residence1 residence0 man) [10.000] ; (2)
+101.271: (walk residence0 residence2 man) [10.000] ; (9)
+111.272: (drop_supply residence2 man) [0.001] ; (28)
+111.273: (drop_supply residence2 man) [0.001] ; (28)
+111.274: (drop_supply residence2 man) [0.001] ; (28)
+111.275: (walk residence2 residence0 man) [10.000] ; (3)
+111.275: (take_payment man residence2) [0.001] ; (22)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (drop_supply residence4 man) [0.001] ; (30)
+171.287: (walk residence4 residence0 man) [10.000] ; (5)
+171.287: (take_payment man residence4) [0.001] ; (24)
+181.288: (walk residence0 residence1 man) [10.000] ; (7)
+191.289: (walk residence1 superstore0 man) [10.000] ; (13)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.292: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.293: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.294: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.295: (walk superstore0 residence1 man) [10.000] ; (8)
+211.296: (walk residence1 residence0 man) [10.000] ; (2)
+221.297: (drop_supply residence0 man) [0.001] ; (26)
+221.298: (drop_supply residence0 man) [0.001] ; (26)
+221.299: (drop_supply residence0 man) [0.001] ; (26)
+221.300: (drop_supply residence0 man) [0.001] ; (26)
+221.301: (drop_supply residence0 man) [0.001] ; (26)
+221.302: (walk residence0 residence1 man) [10.000] ; (7)
+231.303: (walk residence1 superstore0 man) [10.000] ; (13)
+241.304: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.305: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.306: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.307: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.308: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.309: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.310: (walk superstore0 residence1 man) [10.000] ; (8)
+251.311: (walk residence1 residence0 man) [10.000] ; (2)
+261.312: (drop_supply residence0 man) [0.001] ; (26)
+261.313: (drop_supply residence0 man) [0.001] ; (26)
+261.314: (walk residence0 residence5 man) [10.000] ; (12)
+261.314: (take_payment man residence0) [0.001] ; (20)
+271.315: (drop_supply residence5 man) [0.001] ; (31)
+271.316: (drop_supply residence5 man) [0.001] ; (31)
+271.317: (drop_supply residence5 man) [0.001] ; (31)
+271.318: (drop_supply residence5 man) [0.001] ; (31)
+271.319: (take_payment man residence5) [0.001] ; (25)
+.x................................x...........................................................................x..............................x...........................................................x.....................................................x...............................................................................x........................................x....One way facts...
+Mutex groups...
+Semaphore Facts...
+Envelope Facts...
+One-shot actions...
+(accept_order residence0 man) is 1 shot
+(accept_order residence1 man) is 1 shot
+(accept_order residence2 man) is 1 shot
+(accept_order residence3 man) is 1 shot
+(accept_order residence4 man) is 1 shot
+(accept_order residence5 man) is 1 shot
+(take_payment man residence0) is 1 shot
+(take_payment man residence1) is 1 shot
+(take_payment man residence2) is 1 shot
+(take_payment man residence3) is 1 shot
+(take_payment man residence4) is 1 shot
+(take_payment man residence5) is 1 shot
+Integral variables...
+Variable bounds...
+Static numeric conditions...
+Duration bounds...
+Dominance constraints (excluding processes and events)...
+Damaging events...
+Dominance constraints (including processes and events)...
+Max/min needed values for any single precondition...
+Dependencies from NumericFluents to the conditions and effects that use them...
+Irrelevant action pruning by backward reachability from goal...
+Uninterestingness criteria...
+Compression-safe actions...
+Compression-safe invariants...
+0% of durative actions in this problem are compression safe
+Finishing preprocessing.  Making a TRPG heuristic...
+Making an open list...
+Running WA* search (g weight = 1, h weight = 5)
+Initial heuristic = 39
+Initial stats: t=0.02s, 8360kb
+b (38 @ n=3, t=0.03s, 8360kb)b (37 @ n=11, t=0.03s, 8360kb)b (36 @ n=18, t=0.03s, 8360kb)b (35 @ n=24, t=0.03s, 8360kb)b (34 @ n=29, t=0.03s, 8360kb)b (33 @ n=33, t=0.03s, 8360kb)b (32 @ n=36, t=0.03s, 8360kb)b (31 @ n=76, t=0.04s, 8492kb)b (30 @ n=84, t=0.04s, 8492kb)b (29 @ n=85, t=0.04s, 8492kb)b (27 @ n=111, t=0.04s, 8608kb)..b (26 @ n=404, t=0.1s, 9496kb)b (25 @ n=405, t=0.11s, 9496kb)b (24 @ n=408, t=0.11s, 9496kb)b (23 @ n=416, t=0.11s, 9496kb)....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................b (21 @ n=141543, t=33.17s, 671468kb)b (20 @ n=141544, t=33.17s, 671468kb)b (19 @ n=141547, t=33.17s, 671568kb)b (18 @ n=141555, t=33.17s, 671568kb)x.....................................................................................................................................................................................................................................................................................................................................................................b (17 @ n=204821, t=49.01s, 1117036kb)...x..................................................................................b (16 @ n=214305, t=51.44s, 1190444kb)b (14 @ n=214307, t=51.44s, 1190444kb).b (12 @ n=214620, t=51.52s, 1193512kb)................b (11 @ n=217385, t=52.36s, 1223784kb)b (10 @ n=217392, t=52.36s, 1223916kb)..b (9 @ n=217720, t=52.46s, 1227940kb)b (8 @ n=217728, t=52.46s, 1227940kb)x...................................................................................................................................................................................................................................................................................b (7 @ n=265465, t=70.09s, 1848484kb)......b (6 @ n=266530, t=70.58s, 1864124kb)b (5 @ n=266536, t=70.59s, 1864260kb)b (4 @ n=266538, t=70.59s, 1864260kb)b (3 @ n=266541, t=70.59s, 1864260kb).........................................b (2 @ n=276290, t=74.86s, 2028780kb)b (1 @ n=276297, t=74.87s, 2028916kb)
+;;;; Solution Found
+; Time 74.87
+; Peak memory 2029060kb
+; Nodes Generated: 276303
+; Nodes Expanded:  109089
+; Nodes Evaluated: 276303
+; Nodes Tunneled:  114942
+; Metric value 281.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+41.260: (walk residence0 residence2 man) [10.000] ; (9)
+51.261: (drop_supply residence2 man) [0.001] ; (28)
+51.262: (drop_supply residence2 man) [0.001] ; (28)
+51.263: (walk residence2 residence0 man) [10.000] ; (3)
+51.263: (take_payment man residence2) [0.001] ; (22)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (drop_supply residence1 man) [0.001] ; (27)
+91.271: (walk residence1 residence0 man) [10.000] ; (2)
+91.271: (take_payment man residence1) [0.001] ; (21)
+101.272: (walk residence0 residence3 man) [10.000] ; (10)
+111.273: (drop_supply residence3 man) [0.001] ; (29)
+111.274: (drop_supply residence3 man) [0.001] ; (29)
+111.275: (walk residence3 residence0 man) [10.000] ; (4)
+111.275: (take_payment man residence3) [0.001] ; (23)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (walk residence4 residence0 man) [10.000] ; (5)
+171.286: (take_payment man residence4) [0.001] ; (24)
+181.287: (walk residence0 residence1 man) [10.000] ; (7)
+191.288: (walk residence1 superstore0 man) [10.000] ; (13)
+201.289: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (walk superstore0 residence1 man) [10.000] ; (8)
+211.292: (walk residence1 residence0 man) [10.000] ; (2)
+221.293: (walk residence0 residence5 man) [10.000] ; (12)
+231.294: (drop_supply residence5 man) [0.001] ; (31)
+231.295: (drop_supply residence5 man) [0.001] ; (31)
+231.296: (walk residence5 residence0 man) [10.000] ; (6)
+231.296: (take_payment man residence5) [0.001] ; (25)
+241.297: (walk residence0 residence1 man) [10.000] ; (7)
+251.298: (walk residence1 superstore0 man) [10.000] ; (13)
+261.299: (pick_up_supply superstore0 man) [0.001] ; (32)
+261.300: (walk superstore0 residence1 man) [10.000] ; (8)
+271.301: (walk residence1 residence0 man) [10.000] ; (2)
+281.302: (drop_supply residence0 man) [0.001] ; (26)
+281.303: (drop_supply residence0 man) [0.001] ; (26)
+281.304: (take_payment man residence0) [0.001] ; (20)
+................x...
+;;;; Solution Found
+; Time 76.16
+; Peak memory 2099772kb
+; Nodes Generated: 280456
+; Nodes Expanded:  110029
+; Nodes Evaluated: 277074
+; Nodes Tunneled:  116620
+; Metric value 271.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+41.260: (walk residence0 residence2 man) [10.000] ; (9)
+51.261: (drop_supply residence2 man) [0.001] ; (28)
+51.262: (drop_supply residence2 man) [0.001] ; (28)
+51.263: (walk residence2 residence0 man) [10.000] ; (3)
+51.263: (take_payment man residence2) [0.001] ; (22)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (drop_supply residence1 man) [0.001] ; (27)
+91.271: (walk residence1 residence0 man) [10.000] ; (2)
+91.271: (take_payment man residence1) [0.001] ; (21)
+101.272: (walk residence0 residence3 man) [10.000] ; (10)
+111.273: (drop_supply residence3 man) [0.001] ; (29)
+111.274: (drop_supply residence3 man) [0.001] ; (29)
+111.275: (walk residence3 residence0 man) [10.000] ; (4)
+111.275: (take_payment man residence3) [0.001] ; (23)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (walk residence4 residence0 man) [10.000] ; (5)
+171.286: (take_payment man residence4) [0.001] ; (24)
+181.287: (walk residence0 residence1 man) [10.000] ; (7)
+191.288: (walk residence1 superstore0 man) [10.000] ; (13)
+201.289: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (walk superstore0 residence1 man) [10.000] ; (8)
+211.292: (walk residence1 residence0 man) [10.000] ; (2)
+221.293: (drop_supply residence0 man) [0.001] ; (26)
+221.294: (drop_supply residence0 man) [0.001] ; (26)
+221.295: (walk residence0 residence1 man) [10.000] ; (7)
+221.295: (take_payment man residence0) [0.001] ; (20)
+231.296: (walk residence1 superstore0 man) [10.000] ; (13)
+241.297: (pick_up_supply superstore0 man) [0.001] ; (32)
+241.298: (walk superstore0 residence1 man) [10.000] ; (8)
+251.299: (walk residence1 residence0 man) [10.000] ; (2)
+261.300: (walk residence0 residence5 man) [10.000] ; (12)
+271.301: (drop_supply residence5 man) [0.001] ; (31)
+271.302: (drop_supply residence5 man) [0.001] ; (31)
+271.303: (take_payment man residence5) [0.001] ; (25)
+...x
+;;;; Solution Found
+; Time 76.44
+; Peak memory 2110384kb
+; Nodes Generated: 281084
+; Nodes Expanded:  110181
+; Nodes Evaluated: 277302
+; Nodes Tunneled:  116909
+; Metric value 231.25
+0.001: (accept_order residence0 man) [0.001] ; (14)
+0.001: (accept_order residence1 man) [0.001] ; (15)
+0.001: (accept_order residence2 man) [0.001] ; (16)
+0.001: (accept_order residence3 man) [0.001] ; (17)
+0.001: (accept_order residence4 man) [0.001] ; (18)
+0.001: (accept_order residence5 man) [0.001] ; (19)
+0.001: (drive petrol_station0 residence0 man ferrari) [1.250] ; (34)
+1.252: (walk residence0 residence1 man) [10.000] ; (7)
+11.253: (walk residence1 superstore0 man) [10.000] ; (13)
+21.254: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.255: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.256: (pick_up_supply superstore0 man) [0.001] ; (32)
+21.257: (walk superstore0 residence1 man) [10.000] ; (8)
+31.258: (drop_supply residence1 man) [0.001] ; (27)
+31.259: (walk residence1 residence0 man) [10.000] ; (2)
+41.260: (walk residence0 residence2 man) [10.000] ; (9)
+51.261: (drop_supply residence2 man) [0.001] ; (28)
+51.262: (drop_supply residence2 man) [0.001] ; (28)
+51.263: (walk residence2 residence0 man) [10.000] ; (3)
+51.263: (take_payment man residence2) [0.001] ; (22)
+61.264: (walk residence0 residence1 man) [10.000] ; (7)
+71.265: (walk residence1 superstore0 man) [10.000] ; (13)
+81.266: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.267: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.268: (pick_up_supply superstore0 man) [0.001] ; (32)
+81.269: (walk superstore0 residence1 man) [10.000] ; (8)
+91.270: (drop_supply residence1 man) [0.001] ; (27)
+91.271: (walk residence1 residence0 man) [10.000] ; (2)
+91.271: (take_payment man residence1) [0.001] ; (21)
+101.272: (walk residence0 residence3 man) [10.000] ; (10)
+111.273: (drop_supply residence3 man) [0.001] ; (29)
+111.274: (drop_supply residence3 man) [0.001] ; (29)
+111.275: (walk residence3 residence0 man) [10.000] ; (4)
+111.275: (take_payment man residence3) [0.001] ; (23)
+121.276: (walk residence0 residence1 man) [10.000] ; (7)
+131.277: (walk residence1 superstore0 man) [10.000] ; (13)
+141.278: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.279: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.280: (pick_up_supply superstore0 man) [0.001] ; (32)
+141.281: (walk superstore0 residence1 man) [10.000] ; (8)
+151.282: (walk residence1 residence0 man) [10.000] ; (2)
+161.283: (walk residence0 residence4 man) [10.000] ; (11)
+171.284: (drop_supply residence4 man) [0.001] ; (30)
+171.285: (drop_supply residence4 man) [0.001] ; (30)
+171.286: (walk residence4 residence0 man) [10.000] ; (5)
+171.286: (take_payment man residence4) [0.001] ; (24)
+181.287: (walk residence0 residence1 man) [10.000] ; (7)
+191.288: (walk residence1 superstore0 man) [10.000] ; (13)
+201.289: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.290: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.291: (pick_up_supply superstore0 man) [0.001] ; (32)
+201.292: (walk superstore0 residence1 man) [10.000] ; (8)
+211.293: (walk residence1 residence0 man) [10.000] ; (2)
+221.294: (drop_supply residence0 man) [0.001] ; (26)
+221.295: (drop_supply residence0 man) [0.001] ; (26)
+221.296: (walk residence0 residence5 man) [10.000] ; (12)
+221.296: (take_payment man residence0) [0.001] ; (20)
+231.297: (drop_supply residence5 man) [0.001] ; (31)
+231.298: (drop_supply residence5 man) [0.001] ; (31)
+231.299: (take_payment man residence5) [0.001] ; (25)
+.......x...................................x....xx...x.x....x.x...x.x.x.x.x.x..x.................................................................x.x.....x..................................................x............x........x...................................................x..x...............x............................x..x.x........................................x.x....................x.......x.......................

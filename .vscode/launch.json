@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "javaff.JavaFF",
             "projectName": "JavaFF2",
-            "args": 
+            "args": " test_problems/rover/domain.pddl test_problems/rover/problems/pfile20.pddl"
         },
         {
             "type": "java",
