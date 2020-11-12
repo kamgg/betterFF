@@ -1,0 +1,22 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# settings
+.settings
+
+# vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
