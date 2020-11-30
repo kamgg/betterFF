@@ -40,6 +40,7 @@ import javaff.data.Plan;
 import javaff.data.TotalOrderPlan;
 import javaff.data.TimeStampedPlan;
 import javaff.data.metric.NumberFunction;
+import javaff.data.strips.And;
 import javaff.data.strips.InstantAction;
 import javaff.data.strips.Not;
 import javaff.data.temporal.DurativeAction;
@@ -71,6 +72,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.border.StrokeBorder;
+
+import org.graalvm.compiler.nodes.NodeView.Default;
+
 /**
  * An implementation of the FF planner in Java. The planner currently only
  * supports STRIPS/ADL style planning, but as it is a branch of the CRIKEY planner,
@@ -100,6 +105,12 @@ public class JavaFF
 	 * @deprecated Not so much deprecated as not implemented fully yet!
 	 */
 	protected static boolean Deterministic = false;
+
+
+	/**
+	 * This flag determines whether to use goal serialisation on solving the problem.
+	 */
+	protected static boolean GoalSerialisation = false;
 
 	/**
 	 * Returns the hard-coded, static and final PDDL requirements which JavaFF supports.
@@ -202,52 +213,65 @@ public class JavaFF
 		return JavaFF.PDDLRequirementsSupported.subsumes(problemRequirments);
 	}
 
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		EPSILON = EPSILON.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		MAX_DURATION = MAX_DURATION.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
 		boolean useOutputFile = false;
 
-		if (args.length < 2)
-		{
-			System.out
-					.println("Parameters needed: domainFile.pddl problemFile.pddl [outputfile.sol]");
 
-		}
-		else
-		{
-			//TODO write a decent arg parser
-			File domainFile = new File(args[0]);
-			File problemFile = new File(args[1]);
-			File solutionFile = null;
-			if (args.length > 2)
-			{
-				solutionFile = new File(args[2]);
-				useOutputFile = true;
+		// Shoddy arg parser
+		ArrayList<String> parameters = new ArrayList<String>();
 
-				for (int i = 3; i < args.length; i++)
-				{
-					if (args[i].equals("--deterministic")
-							|| args[i].equals("-d"))
-					{
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].startsWith("-")) {
+				switch(args[i]) {
+					case "--deterministic": {
 						JavaFF.Deterministic = true;
+						break;
 					}
+
+					case "-D": {
+						JavaFF.Deterministic = true;
+						break;
+					}
+
+					case "--goal-serialisation": {
+						JavaFF.GoalSerialisation = true;
+						break;
+					}
+
+					case "-GS": {
+						JavaFF.GoalSerialisation = true;
+						break;
+					}
+					default:
+					System.out.println("Invalid option: '" + args[i] + "'");
+
 				}
+			} else {
+				parameters.add(args[i]);
+			}
+		}
+
+		if (parameters.size() < 2) {
+			System.out.println("Parameters needed: [options] domainFile.pddl problemFile.pddl [outputfile.sol]");
+		} else {
+			File domainFile = new File(parameters.get(0));
+			File problemFile = new File(parameters.get(1));
+			File solutionFile = null;
+
+			if (parameters.size() > 2) {
+				solutionFile = new File(parameters.get(2));
+				useOutputFile = true;
 			}
 
-			try
-			{
+			try {
 				JavaFF planner = new JavaFF(domainFile, solutionFile);
 				Plan p = planner.plan(problemFile);
-			}
-			catch (UnreachableGoalException e)
-			{
-				System.out.println("Goal " + e.getUnreachables().toString()
-						+ " is unreachable");
-			}
-			catch (ParseException e)
-			{
+			} catch (UnreachableGoalException e) {
+				System.out.println("Goal " + e.getUnreachables().toString() + " is unreachable");
+			} catch (ParseException e) {
 				System.out.println(e.getMessage());
 			}
 		}
@@ -372,7 +396,6 @@ public class JavaFF
 			throws UnreachableGoalException
 	{
 		STRIPSState initialState = ground.recomputeSTRIPSInitialState();
-
 		return this.performPlanning(ground, initialState);
 	}
 
@@ -388,7 +411,7 @@ public class JavaFF
 		TotalOrderPlan plan = null;
 
 		System.out.println("Goal is: " + ground.getGoal().toString());
-		
+
 		double planningEHCTime = 0;
 		double planningBFSTime = 0;
 		if (this.isUseEHC())
@@ -635,7 +658,26 @@ public class JavaFF
 		GroundProblem ground = unground.ground();
 		System.out.println("Grounding complete");
 
-		return this.doPlan(ground);
+		if (JavaFF.GoalSerialisation && ground.getGoal() instanceof And) {
+			System.out.println("Serialising goals...");
+			And goals = (And) ground.getGoal();
+			Plan finalPlan = null;
+
+			And currentGoals = new And();
+			GroundProblem newGround = (GroundProblem) ground.clone();
+			for (Fact fact : goals.getFacts()) {
+				currentGoals.add(fact);
+				System.out.print("Running planner on goals: " + currentGoals);
+				newGround.setGoal(currentGoals);
+
+				Plan currentPlan = this.doPlan(newGround);
+				currentPlan.
+			}
+
+			return finalPlan;
+		} else {
+			return this.doPlan(ground);
+		}
 	}
 
 //	/**

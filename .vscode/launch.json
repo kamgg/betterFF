@@ -6,11 +6,19 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - JavaFF",
+            "name": "JavaFF on rover domain",
             "request": "launch",
             "mainClass": "javaff.JavaFF",
             "projectName": "JavaFF2",
-            "args": " test_problems/rover/domain.pddl test_problems/rover/problems/pfile20.pddl"
+            "args": "test_problems/rover/domain.pddl test_problems/rover/problems/pfile10.pddl"
+        },
+        {
+            "type": "java",
+            "name": "JavaFF on rover domain with goal serialisation",
+            "request": "launch",
+            "mainClass": "javaff.JavaFF",
+            "projectName": "JavaFF2",
+            "args": "-GS test_problems/rover/domain.pddl test_problems/rover/problems/pfile10.pddl"
         },
         {
             "type": "java",
