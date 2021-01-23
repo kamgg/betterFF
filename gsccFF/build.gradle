@@ -1,0 +1,19 @@
+  
+plugins {
+  id 'java'
+  id 'application'
+}
+
+repositories {
+    mavenCentral()
+	jcenter()
+
+}
+
+dependencies {
+    implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
+    implementation("org.graalvm.compiler:compiler:21.0.0")
+    // implementation("org.jgrapht:jgrapht-jdk1.6")
+}
+
+mainClassName = "javaff.JavaFF"
