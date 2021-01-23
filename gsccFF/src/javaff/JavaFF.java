@@ -661,21 +661,24 @@ public class JavaFF
 		if (JavaFF.GoalSerialisation && ground.getGoal() instanceof And) {
 			System.out.println("Serialising goals...");
 			And goals = (And) ground.getGoal();
-			Plan finalPlan = null;
+			
+			And currentGoal = new And();
 
-			And currentGoals = new And();
-			GroundProblem newGround = (GroundProblem) ground.clone();
+			GroundProblem currentProblem = (GroundProblem) ground.clone();
+			TotalOrderPlan currentPlan = null;
+
 			for (Fact fact : goals.getFacts()) {
-				currentGoals.add(fact);
-				System.out.print("Running planner on goals: " + currentGoals);
-				newGround.setGoal(currentGoals);
+				currentGoal.add(fact);
+				System.out.print("Running planner on goal(s): " + currentGoal);
+				currentProblem.setGoal(currentGoal);
 
-				Plan currentPlan = this.doPlan(newGround);
-				currentPlan.
+				currentPlan = (TotalOrderPlan) this.doPlan(currentProblem);
 			}
 
-			return finalPlan;
+			return (Plan) currentPlan;
 		} else {
+			System.out.println(ground.getInitial());
+			System.out.println(ground.getGroundedPropositions());
 			return this.doPlan(ground);
 		}
 	}

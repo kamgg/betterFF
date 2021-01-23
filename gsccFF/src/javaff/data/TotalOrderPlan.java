@@ -36,6 +36,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 
+import javaff.planning.State;
 /**
  * Represents a totally-ordered plan, containing discrete actions.
  * @author David Pattison
@@ -45,10 +46,12 @@ public class TotalOrderPlan implements Plan, Cloneable, Iterable<Action>
 {
 	private List<Action> plan;
 	private Fact goal;
-	
+	private State finalState;
+
 	public TotalOrderPlan(Fact goal)
 	{
 		this.goal = goal;
+		this.finalState = null;
 		this.plan = new ArrayList<Action>();
 	}
 	
@@ -191,5 +194,13 @@ public class TotalOrderPlan implements Plan, Cloneable, Iterable<Action>
 	protected void setPlan(List<Action> plan)
 	{
 		this.plan = plan;
+	}
+
+	public void setFinalState(State state) {
+		this.finalState = state;
+	}
+
+	public State getFinalState() {
+		return finalState;
 	}
 }

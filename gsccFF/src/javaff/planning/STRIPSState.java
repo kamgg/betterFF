@@ -332,6 +332,7 @@ public class STRIPSState extends State implements Cloneable
 
 	public Plan getSolution()
 	{
+		plan.setFinalState(this);
 		return plan;
 	}
 
