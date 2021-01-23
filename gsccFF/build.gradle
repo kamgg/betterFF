@@ -1,7 +1,6 @@
   
 plugins {
   id 'java'
-  id 'application'
 }
 
 repositories {
@@ -13,7 +12,20 @@ repositories {
 dependencies {
     implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
     implementation("org.graalvm.compiler:compiler:21.0.0")
-    // implementation("org.jgrapht:jgrapht-jdk1.6")
 }
 
-mainClassName = "javaff.JavaFF"
+task roverTest(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'javaff.JavaFF'
+
+  args "test_problems/rover/domain.pddl", "test_problems/rover/problems/pfile10.pddl"
+}
+
+task roverTestGS(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+
+  main = 'javaff.JavaFF'
+
+  args "-GS", "test_problems/rover/domain.pddl", "test_problems/rover/problems/pfile10.pddl"
+}

@@ -104,6 +104,7 @@ public class JavaFF
 	 * defined elsewhere.
 	 * @deprecated Not so much deprecated as not implemented fully yet!
 	 */
+	@Deprecated
 	protected static boolean Deterministic = false;
 
 
@@ -222,8 +223,9 @@ public class JavaFF
 
 		// Shoddy arg parser
 		ArrayList<String> parameters = new ArrayList<String>();
-
+		
 		for (int i = 0; i < args.length; i++) {
+
 			if (args[i].startsWith("-")) {
 				switch(args[i]) {
 					case "--deterministic": {
@@ -241,7 +243,7 @@ public class JavaFF
 						break;
 					}
 
-					case "-GS": {
+					case "-G": {
 						JavaFF.GoalSerialisation = true;
 						break;
 					}
@@ -252,6 +254,7 @@ public class JavaFF
 			} else {
 				parameters.add(args[i]);
 			}
+
 		}
 
 		if (parameters.size() < 2) {

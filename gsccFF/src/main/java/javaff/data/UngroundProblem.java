@@ -363,6 +363,7 @@ public class UngroundProblem
 	 * Calling this on a Temporal problem will cause a crash. 
 	 * @deprecated Not in sync with ADL code updates
 	 */
+	@Deprecated
 	public void postProcess()
 	{
 		this.calculateStatics();
