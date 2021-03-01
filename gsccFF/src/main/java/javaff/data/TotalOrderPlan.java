@@ -110,6 +110,15 @@ public class TotalOrderPlan implements Plan, Cloneable, Iterable<Action>
 		return getPlan().add(a);
 	}
 
+	public boolean addActions(List<Action> actions) {
+		boolean added = false;
+		for (Action action : actions) {
+			added = getPlan().add(action);
+		}
+		
+		return added;
+	}
+
 	public int getPlanLength()
 	{
 		return getPlan().size();

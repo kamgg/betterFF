@@ -56,6 +56,7 @@ import javaff.search.BestFirstSearch;
 import javaff.search.EnforcedHillClimbingSearch;
 import javaff.search.Search;
 import javaff.search.UnreachableGoalException;
+import javaff.util.Triplet;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -70,6 +71,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.border.StrokeBorder;
@@ -395,15 +397,18 @@ public class JavaFF
 		return true;
 	}
 
-	protected Plan doSTRIPSPlan(GroundProblem ground)
-			throws UnreachableGoalException
+	protected Plan doSTRIPSPlan(GroundProblem ground) throws UnreachableGoalException
 	{
-		STRIPSState initialState = ground.recomputeSTRIPSInitialState();
-		return this.performPlanning(ground, initialState);
+
+		if (JavaFF.GoalSerialisation && ground.getGoal() instanceof And) {
+			return this.performPlanningGS(ground);
+		} else {
+			STRIPSState initialState = ground.recomputeSTRIPSInitialState();
+			return this.performPlanning(ground, initialState);
+		}
 	}
 
-	protected TotalOrderPlan performPlanning(GroundProblem ground,
-			State initialState) throws UnreachableGoalException
+	protected TotalOrderPlan performPlanning(GroundProblem ground, State initialState) throws UnreachableGoalException
 	{
 		long startTime = System.nanoTime();
 		long afterBFSPlanning = 0, afterEHCPlanning = 0;
@@ -417,6 +422,7 @@ public class JavaFF
 
 		double planningEHCTime = 0;
 		double planningBFSTime = 0;
+
 		if (this.isUseEHC())
 		{
 			System.out.println("Running FF with EHC...");
@@ -429,6 +435,7 @@ public class JavaFF
 		{
 			System.out.println("Found EHC plan: ");
 			plan = (TotalOrderPlan) goalState.getSolution();
+			plan.setFinalState(goalState);
 		}
 		else if (this.isUseBFS())
 		{
@@ -441,7 +448,6 @@ public class JavaFF
 			if (goalState != null)
 			{
 				plan = (TotalOrderPlan) goalState.getSolution();
-
 				System.out.println("Found BFS plan: ");
 
 			}
@@ -452,147 +458,142 @@ public class JavaFF
 		if (plan != null)
 		{
 			System.out.println("Final plan...");
-			// plan.print(planOutput);
-
-			// ***************0*****************
-			// Schedule a plan
-			// ********************************
 			int actionCounter = 0;
 			tsp = new TimeStampedPlan(ground.getGoal());
 			for (Object a : plan.getActions())
 				tsp.addAction((Action) a, new BigDecimal(actionCounter++));
 
-			double schedulingTime = 0;
-			 //Original JavaFFScheduler does not work -- replaced with
-			 //STRIPSScheduler
-//			if (goalState != null)
-//			{
-//				long beforeScheduling = System.nanoTime();
-//				infoOutput.println("Scheduling");
-//
-//				Scheduler scheduler = new STRIPSScheduler(ground);
-//				try
-//				{
-//					tsp = scheduler.schedule(plan);
-//				}
-//				catch (SchedulingException e)
-//				{
-//					e.printStackTrace();
-//				}
-//				long afterScheduling = System.nanoTime();
-//				schedulingTime = (afterScheduling - beforeScheduling)
-//						/ JavaFF.Nanos;
-//			}
 
 			if (tsp != null)
 			{
 				tsp.print(planOutput);
-				System.out
-						.println("Final plan length is " + tsp.actions.size());
+				System.out.println("Final plan length is " + tsp.actions.size());
 			}
 
 			infoOutput.println("EHC Plan Time = " + planningEHCTime + "sec");
 			infoOutput.println("BFS Plan Time = " + planningBFSTime + "sec");
-			infoOutput.println("Scheduling Time = " + schedulingTime + "sec");
 		}
 		else
 		{
 			System.out.println("No plan found");
 		}
 
+		plan.setFinalState(goalState);
 		return plan;
 	}
 
-	protected Plan doMetricPlan(GroundProblem ground)
-			throws UnreachableGoalException
+	protected Triplet<TotalOrderPlan, Double, Double> performSinglePlanGS(GroundProblem ground, State initialState) throws UnreachableGoalException 
 	{
-		// construct init
-		Set na = new HashSet();
-		Set ni = new HashSet();
-		Iterator ait = ground.getActions().iterator();
-		while (ait.hasNext())
+		long startTime = System.nanoTime();
+		long afterBFSPlanning, afterEHCPlanning = 0;
+		double planningEHCTime = 0;
+		double planningBFSTime = 0;
+
+		State originalInitState = (State) initialState.clone();
+		State goalState = null;
+		TotalOrderPlan plan = null;
+		
+		if (this.isUseEHC())
 		{
-			Action act = (Action) ait.next();
-			if (act instanceof InstantAction)
+			System.out.println("Running FF with EHC...");
+			goalState = this.performFFSearch(initialState, true);
+			afterEHCPlanning = System.nanoTime();
+			planningEHCTime = (afterEHCPlanning - startTime) / JavaFF.Nanos;
+		}
+
+		if (goalState != null)
+		{
+			System.out.println("Found EHC plan: ");
+			plan = (TotalOrderPlan) goalState.getSolution();
+			plan.setFinalState(goalState);
+		}
+		else if (this.isUseBFS())
+		{
+			initialState = (State) originalInitState.clone();
+			System.out.println("Running FF with BFS...");
+			goalState = this.performFFSearch(initialState, false);
+			afterBFSPlanning = System.nanoTime();
+			planningBFSTime = (afterBFSPlanning - afterEHCPlanning) / JavaFF.Nanos;
+			
+			if (goalState != null)
 			{
-				na.add(act);
-				ni.add(act);
-			}
-			else if (act instanceof DurativeAction)
-			{
-				DurativeAction dact = (DurativeAction) act;
-				na.add(dact.startAction);
-				na.add(dact.endAction);
-				ni.add(dact.startAction);
+				plan = (TotalOrderPlan) goalState.getSolution();
+				plan.setFinalState(goalState);
+				System.out.println("Found BFS plan: ");
 			}
 		}
 
-		Metric metric;
-		if (ground.getMetric() == null)
-			metric = new Metric(MetricType.Minimize, new NumberFunction(0));
-		else
-			metric = ground.getMetric();
-
-		// MetricState ms = new MetricState(ni, ground.mstate.facts,
-		// ground.goal,
-		// ground.functionValues, metric);
-		// System.out.println("About to create gp");
-		// GroundProblem gp = new GroundProblem(na, ground.mstate.facts,
-		// ground.goal,
-		// ground.functionValues, metric);
-		// gp.getMetricInitialState();
-		// System.out.println("Creating RPG");
-		// ms.setRPG(new RelaxedMetricPlanningGraph(gp));
-		MetricState initialState = ground.recomputeMetricInitialState();
-
-		return this.performPlanning(ground, initialState);
+		return new Triplet<TotalOrderPlan, Double, Double>(plan, planningEHCTime, planningBFSTime);
 	}
-
-	protected Plan doTemporalPlan(GroundProblem ground)
-			throws UnreachableGoalException
+	protected TotalOrderPlan performPlanningGS(GroundProblem ground) throws UnreachableGoalException
 	{
-		// construct init
-		Set na = new HashSet();
-		Set ni = new HashSet();
-		Iterator ait = ground.getActions().iterator();
-		while (ait.hasNext())
-		{
-			Action act = (Action) ait.next();
-			if (act instanceof InstantAction)
-			{
-				na.add(act);
-				ni.add(act);
+		// Time variables
+		double totalPlanningEHCTime = 0;
+		double totalPlanningBFSTime = 0;
+
+		// Goals
+		And goals = (And) ground.getGoal();
+		And currentGoal = new And();
+
+		System.out.print("Serialising goal(s): ");
+		System.out.println(goals);
+		
+		// Clone problem
+		GroundProblem currentProblem = (GroundProblem) ground.clone();
+
+		// List of plans
+		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
+
+		for (Fact fact : goals.getFacts()) {
+			currentGoal.add(fact);
+			System.out.println("Running planner on goal(s): " + currentGoal);
+			currentProblem.setGoal(currentGoal);
+			
+			// If there has been a prior plan, update the initial state to be the final state of the previous plan
+			if (plans.size() != 0) {
+				TotalOrderPlan currentPlan = plans.get(plans.size() - 1);
+				STRIPSState finalState = (STRIPSState) currentPlan.getFinalState();
+				Set<Fact> newInitialState = finalState.getFacts();
+				currentProblem.setInitial(newInitialState);
 			}
-			else if (act instanceof DurativeAction)
-			{
-				DurativeAction dact = (DurativeAction) act;
-				na.add(dact.startAction);
-				na.add(dact.endAction);
-				ni.add(dact.startAction);
-			}
+
+			STRIPSState initialState = currentProblem.recomputeSTRIPSInitialState();
+			Triplet<TotalOrderPlan, Double, Double> planData = this.performSinglePlanGS(currentProblem, initialState);
+			totalPlanningEHCTime += planData.y;
+			totalPlanningBFSTime += planData.z;
+			plans.add(planData.x);
+		}
+		TotalOrderPlan completePlan = new TotalOrderPlan(plans.get(plans.size() - 1).getGoal());
+
+		for (TotalOrderPlan plan : plans) {
+			completePlan.addActions(plan.getActions());
 		}
 
-		Metric metric;
-		if (ground.getMetric() == null)
-			metric = new Metric(MetricType.Minimize, new NumberFunction(0));
+		TimeStampedPlan tsp = null;
+		if (completePlan != null)
+		{
+			System.out.println("Final plan...");
+
+			int actionCounter = 0;
+			tsp = new TimeStampedPlan(ground.getGoal());
+			for (Object a : completePlan.getActions())
+				tsp.addAction((Action) a, new BigDecimal(actionCounter++));
+
+			if (tsp != null)
+			{
+				tsp.print(planOutput);
+				System.out.println("Final plan length is " + tsp.actions.size());
+			}
+
+			infoOutput.println("EHC Plan Time = " + totalPlanningEHCTime + "sec");
+			infoOutput.println("BFS Plan Time = " + totalPlanningBFSTime + "sec");
+		}
 		else
-			metric = ground.getMetric();
+		{
+			System.out.println("No plan found");
+		}
 
-		System.out.println("About to create init tmstate");
-		// TemporalMetricState ts = new TemporalMetricState(ni,
-		// ground.tmstate.facts, ground.goal,
-		// ground.functionValues, metric);
-		// System.out.println("About to create gp");
-		// GroundProblem gp = new GroundProblem(na, ground.tmstate.facts,
-		// ground.goal,
-		// ground.functionValues, metric);
-		// gp.getTemporalMetricInitialState();
-		// System.out.println("Creating RPG");
-		// ts.setRPG(new RelaxedTemporalMetricPlanningGraph(gp));
-		TemporalMetricState initialState = ground
-				.recomputeTemporalMetricInitialState();
-
-		return this.performPlanning(ground, initialState);
+		return completePlan;
 	}
 
 	protected Plan doPlan(GroundProblem ground) throws UnreachableGoalException
@@ -661,29 +662,7 @@ public class JavaFF
 		GroundProblem ground = unground.ground();
 		System.out.println("Grounding complete");
 
-		if (JavaFF.GoalSerialisation && ground.getGoal() instanceof And) {
-			System.out.println("Serialising goals...");
-			And goals = (And) ground.getGoal();
-			
-			And currentGoal = new And();
-
-			GroundProblem currentProblem = (GroundProblem) ground.clone();
-			TotalOrderPlan currentPlan = null;
-
-			for (Fact fact : goals.getFacts()) {
-				currentGoal.add(fact);
-				System.out.print("Running planner on goal(s): " + currentGoal);
-				currentProblem.setGoal(currentGoal);
-
-				currentPlan = (TotalOrderPlan) this.doPlan(currentProblem);
-			}
-
-			return (Plan) currentPlan;
-		} else {
-			System.out.println(ground.getInitial());
-			System.out.println(ground.getGroundedPropositions());
-			return this.doPlan(ground);
-		}
+		return this.doPlan(ground);
 	}
 
 //	/**
