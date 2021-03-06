@@ -109,7 +109,7 @@ public class EnforcedHillClimbingSearch extends Search
 		bestHValue = start.getHValue(); // and take its heuristic value as the
 										// best so far
 
-		javaff.JavaFF.infoOutput.print(bestHValue+" into depth ");
+		// javaff.JavaFF.infoOutput.print(bestHValue+" into depth ");
 		int statesEvaluated = 1;
 		int maxDepth = 1;
 		HashMap<State, Integer> successorLayers = new HashMap<State, Integer>();
@@ -126,7 +126,7 @@ public class EnforcedHillClimbingSearch extends Search
 			
 			if (currentDepth > prevDepth)
 			{
-				JavaFF.infoOutput.print("["+(currentDepth)+"]");
+				// JavaFF.infoOutput.print("["+(currentDepth)+"]"); TODO: add silent output
 				prevDepth = currentDepth;
 			}
 			
@@ -159,7 +159,7 @@ public class EnforcedHillClimbingSearch extends Search
 				{ // if we've found a goal state -
 					// return it as the
 					// solution
-					JavaFF.infoOutput.println("\nEvaluated "+statesEvaluated+" states to a max depth of "+maxDepth);
+					// JavaFF.infoOutput.println("\nEvaluated "+statesEvaluated+" states to a max depth of "+maxDepth); 
 					
 					return succ;
 				}
@@ -178,7 +178,7 @@ public class EnforcedHillClimbingSearch extends Search
 					prevDepth = 0;
 					currentDepth = 1;
 					
-					JavaFF.infoOutput.print("\n"+bestHValue+" into depth ");
+					// JavaFF.infoOutput.print("\n"+bestHValue+" into depth ");
 					
 					continue out; // and skip looking at the other successors
 				}
@@ -191,7 +191,7 @@ public class EnforcedHillClimbingSearch extends Search
 			}
 			
 		}
-		JavaFF.infoOutput.println();
+		// JavaFF.infoOutput.println();
 		
 		return null;
 	}
