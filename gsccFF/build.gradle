@@ -5,8 +5,7 @@ plugins {
 
 repositories {
     mavenCentral()
-	jcenter()
-
+	  jcenter()
 }
 
 dependencies {
@@ -14,18 +13,33 @@ dependencies {
     implementation("org.graalvm.compiler:compiler:21.0.0")
 }
 
-task roverTest(type: JavaExec) {
-  classpath = sourceSets.main.runtimeClasspath
 
-  main = 'javaff.JavaFF'
+// Rovers domain
+(1..20).each { number ->
+  tasks.register("rovertest-gs-${number}", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'javaff.JavaFF'
+    args "-G", "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+  }
 
-  args "test_problems/rover/domain.pddl", "test_problems/rover/problems/pfile10.pddl"
+  tasks.register("rovertest-${number}", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'javaff.JavaFF'
+    args "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}.plan"
+  }
 }
 
-task roverTestGS(type: JavaExec) {
-  classpath = sourceSets.main.runtimeClasspath
 
-  main = 'javaff.JavaFF'
+(1..20).each { number ->
+  tasks.register("driverlog-gs-${number}", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'javaff.JavaFF'
+    args "-G", "test_problems/driverlog/domain.pddl", "test_problems/driverlog/problems/pfile${number}.pddl", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+  }
 
-  args "-G", "test_problems/rover/domain.pddl", "test_problems/rover/problems/pfile10.pddl"
+  tasks.register("driverlog-${number}", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'javaff.JavaFF'
+    args "test_problems/driverlog/domain.pddl", "test_problems/driverlog/problems/pfile${number}.pddl", "test_problems/driverlog/plans/pfile${number}.plan"
+  }
 }
