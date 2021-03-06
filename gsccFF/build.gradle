@@ -16,13 +16,13 @@ dependencies {
 
 // Rovers domain
 (1..20).each { number ->
-  tasks.register("rovertest-gs-${number}", JavaExec) {
+  tasks.register("rovers-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
     args "-G", "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
-  tasks.register("rovertest-${number}", JavaExec) {
+  tasks.register("rovers-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
     args "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}.plan"

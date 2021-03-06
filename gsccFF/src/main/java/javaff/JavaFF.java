@@ -533,6 +533,7 @@ public class JavaFF
 
 		// Goals
 		And goals = (And) ground.getGoal();
+		
 		And currentGoal = new And();
 
 		System.out.print("Serialising goal(s): ");
@@ -544,6 +545,7 @@ public class JavaFF
 		// List of plans
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
 
+		// Iterate through every fact in goal
 		for (Fact fact : goals.getFacts()) {
 			currentGoal.add(fact);
 			System.out.println("Running planner on goal(s): " + currentGoal);
@@ -569,11 +571,37 @@ public class JavaFF
 			completePlan.addActions(plan.getActions());
 		}
 
-		TimeStampedPlan tsp = null;
-		if (completePlan != null)
+		// Update final state of plan with final state of last plan
+		completePlan.setFinalState(plans.get(plans.size() - 1).getFinalState());
+		
+		// Check whether final state goal is achieved
+		STRIPSState finalState = (STRIPSState) completePlan.getFinalState();
+
+		Set<Fact> achievedGoals = finalState.getFacts();
+
+		boolean goalsAchieved = true;
+
+		for (Fact goal : goals.getFacts()) {
+			boolean goalAchieved = false;
+
+			for (Fact achieved : achievedGoals) {
+				if (achieved.toString().equals(goal.toString())) {
+					goalAchieved = true;
+					break;
+				}
+			}
+
+			if (goalAchieved == false) {
+				goalsAchieved = false;
+				break;
+			}
+		}
+
+		if (goalsAchieved)
 		{
 			System.out.println("Final plan...");
-
+			
+			TimeStampedPlan tsp = null;
 			int actionCounter = 0;
 			tsp = new TimeStampedPlan(ground.getGoal());
 			for (Object a : completePlan.getActions())
