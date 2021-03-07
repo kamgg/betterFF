@@ -78,6 +78,9 @@ import javax.swing.border.StrokeBorder;
 
 import org.graalvm.compiler.nodes.NodeView.Default;
 
+import org.apache.commons.cli.*;
+import org.apache.commons.cli.HelpFormatter;
+
 /**
  * An implementation of the FF planner in Java. The planner currently only
  * supports STRIPS/ADL style planning, but as it is a branch of the CRIKEY planner,
@@ -222,52 +225,45 @@ public class JavaFF
 
 		boolean useOutputFile = false;
 
-
-		// Shoddy arg parser
-		ArrayList<String> parameters = new ArrayList<String>();
+		// Argument parser
+		Options options = new Options();
 		
-		for (int i = 0; i < args.length; i++) {
+		// Options
+		Option domain = new Option("d", "domain", true, "domainFile.pddl");
+		domain.setRequired(true);
+		options.addOption(domain);
 
-			if (args[i].startsWith("-")) {
-				switch(args[i]) {
-					case "--deterministic": {
-						JavaFF.Deterministic = true;
-						break;
-					}
+		Option problem = new Option("p", "problem", true, "problemFile.pddl");
+		problem.setRequired(true);
+		options.addOption(problem);
 
-					case "-D": {
-						JavaFF.Deterministic = true;
-						break;
-					}
+		Option output = new Option("o", "output", true, "outputFile.sol");
+		output.setRequired(false);
+		options.addOption(output);
 
-					case "--goal-serialisation": {
-						JavaFF.GoalSerialisation = true;
-						break;
-					}
+		Option deterministic = new Option("D", "deterministic", false, "Deterministic?");
+		deterministic.setRequired(false);
+		options.addOption(deterministic);
 
-					case "-G": {
-						JavaFF.GoalSerialisation = true;
-						break;
-					}
-					default:
-					System.out.println("Invalid option: '" + args[i] + "'");
+		Option goalSerialisation = new Option("g", "goal-serialisation", false, "Goal serialisation?");
+		goalSerialisation.setRequired(false);
+		options.addOption(goalSerialisation);
+		
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine cmd;
 
-				}
-			} else {
-				parameters.add(args[i]);
-			}
+		try {
+			cmd = parser.parse(options, args);
+			JavaFF.Deterministic = cmd.hasOption("deterministic");
+			JavaFF.GoalSerialisation = cmd.hasOption("goal-serialisation");
 
-		}
-
-		if (parameters.size() < 2) {
-			System.out.println("Parameters needed: [options] domainFile.pddl problemFile.pddl [outputfile.sol]");
-		} else {
-			File domainFile = new File(parameters.get(0));
-			File problemFile = new File(parameters.get(1));
+			File domainFile = new File(cmd.getOptionValue("domain"));
+			File problemFile = new File(cmd.getOptionValue("problem"));
 			File solutionFile = null;
 
-			if (parameters.size() > 2) {
-				solutionFile = new File(parameters.get(2));
+			if (cmd.hasOption("output")) {
+				solutionFile = new File(cmd.getOptionValue("output"));
 				useOutputFile = true;
 			}
 
@@ -279,6 +275,11 @@ public class JavaFF
 			} catch (ParseException e) {
 				System.out.println(e.getMessage());
 			}
+		} catch (org.apache.commons.cli.ParseException e) {
+			System.out.println(e.getMessage());
+            formatter.printHelp("JavaFF", options);
+
+            System.exit(1);
 		}
 	}
 

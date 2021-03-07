@@ -11,6 +11,7 @@ repositories {
 dependencies {
     implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
     implementation("org.graalvm.compiler:compiler:21.0.0")
+    implementation(group: "commons-cli", name: "commons-cli", version: "1.4")
 }
 
 
@@ -19,13 +20,13 @@ dependencies {
   tasks.register("rovers-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-G", "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "test_problems/rovers/domain.pddl", "test_problems/rovers/problems/pfile${number}.pddl", "test_problems/rovers/plans/pfile${number}.plan"
+    args "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}.plan"
   }
 }
 
@@ -34,13 +35,13 @@ dependencies {
   tasks.register("driverlog-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-G", "test_problems/driverlog/domain.pddl", "test_problems/driverlog/problems/pfile${number}.pddl", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "test_problems/driverlog/domain.pddl", "test_problems/driverlog/problems/pfile${number}.pddl", "test_problems/driverlog/plans/pfile${number}.plan"
+    args "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}.plan"
   }
 }
 
@@ -49,12 +50,12 @@ dependencies {
   tasks.register("satellite-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-G", "test_problems/satellite/domain.pddl", "test_problems/satellite/problems/pfile${number}.pddl", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("satellite-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "test_problems/satellite/domain.pddl", "test_problems/satellite/problems/pfile${number}.pddl", "test_problems/satellite/plans/pfile${number}.plan"
+    args "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}.plan"
   }
 }
