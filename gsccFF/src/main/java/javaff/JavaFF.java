@@ -56,7 +56,6 @@ import javaff.search.BestFirstSearch;
 import javaff.search.EnforcedHillClimbingSearch;
 import javaff.search.Search;
 import javaff.search.UnreachableGoalException;
-import javaff.util.Triplet;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -75,11 +74,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.border.StrokeBorder;
-
 import org.graalvm.compiler.nodes.NodeView.Default;
-
 import org.apache.commons.cli.*;
 import org.apache.commons.cli.HelpFormatter;
+
+import javaff.serialisation.*;
+import javaff.util.Triplet;
 
 /**
  * An implementation of the FF planner in Java. The planner currently only
@@ -112,12 +112,18 @@ public class JavaFF
 	@Deprecated
 	protected static boolean Deterministic = false;
 
-
 	/**
-	 * This flag determines whether to use goal serialisation on solving the problem.
+	 * This flag is used to determine whether to use goal serialisation on solving the problem.
 	 */
 	protected static boolean GoalSerialisation = false;
 
+
+	/**
+	 * This flag is used to determine whether to use a heuristic, and if so, what heuristic to use with goal serialisation
+	 */
+	protected static Heuristic gsHeuristic = Heuristic.NONE;
+
+	
 	/**
 	 * Returns the hard-coded, static and final PDDL requirements which JavaFF supports.
 	 * @see Requirement
@@ -249,6 +255,21 @@ public class JavaFF
 		goalSerialisation.setRequired(false);
 		options.addOption(goalSerialisation);
 		
+		String allHeuristics = "";
+        Heuristic[] heuristics = Heuristic.values();
+
+        for (int i = 0; i < heuristics.length; i++) {
+            if (i + 1 < heuristics.length) {
+                allHeuristics += heuristics[i] + ", ";
+            } else {
+                allHeuristics += heuristics[i];
+            }
+        }
+
+		Option heuristic = new Option("h", "heuristic", true, "Heuristic to use with goal serialisation. (default: NONE) [" + allHeuristics + "]");
+		heuristic.setRequired(false);
+		options.addOption(heuristic);
+
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine cmd;
@@ -262,9 +283,21 @@ public class JavaFF
 			File problemFile = new File(cmd.getOptionValue("problem"));
 			File solutionFile = null;
 
+			// If an output file has been specified, use it
 			if (cmd.hasOption("output")) {
 				solutionFile = new File(cmd.getOptionValue("output"));
 				useOutputFile = true;
+			}
+
+			// If a heuristic has been specified, use it
+			if (cmd.hasOption("heuristic")) {
+				try {
+					JavaFF.gsHeuristic = Heuristic.valueOf(cmd.getOptionValue("heuristic").toUpperCase());
+					System.out.println(JavaFF.gsHeuristic);
+				} catch(IllegalArgumentException e) {
+					System.out.println("Invalid heuristic specified.");
+					System.exit(1);
+				}
 			}
 
 			try {
@@ -534,7 +567,8 @@ public class JavaFF
 
 		// Goals
 		And goals = (And) ground.getGoal();
-		
+		GoalWrapper wrappedGoals = new GoalWrapper(goals, JavaFF.gsHeuristic);
+
 		And currentGoal = new And();
 
 		System.out.print("Serialising goal(s): ");
@@ -547,7 +581,7 @@ public class JavaFF
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
 
 		// Iterate through every fact in goal
-		for (Fact fact : goals.getFacts()) {
+		for (Fact fact : wrappedGoals) {
 			currentGoal.add(fact);
 			System.out.println("Running planner on goal(s): " + currentGoal);
 			currentProblem.setGoal(currentGoal);
