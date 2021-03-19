@@ -537,7 +537,7 @@ public class JavaFF
 
 		if (goalState != null)
 		{
-			System.out.println("Found EHC plan: ");
+			System.out.println("Found EHC plan");
 			plan = (TotalOrderPlan) goalState.getSolution();
 			plan.setFinalState(goalState);
 		}
@@ -553,7 +553,7 @@ public class JavaFF
 			{
 				plan = (TotalOrderPlan) goalState.getSolution();
 				plan.setFinalState(goalState);
-				System.out.println("Found BFS plan: ");
+				System.out.println("Found BFS plan");
 			}
 		}
 
@@ -564,18 +564,17 @@ public class JavaFF
 		// Time variables
 		double totalPlanningEHCTime = 0;
 		double totalPlanningBFSTime = 0;
+		// Clone problem
+		GroundProblem currentProblem = (GroundProblem) ground.clone();
 
 		// Goals
 		And goals = (And) ground.getGoal();
-		GoalWrapper wrappedGoals = new GoalWrapper(goals, JavaFF.gsHeuristic);
+		GoalWrapper wrappedGoals = new GoalWrapper(goals, JavaFF.gsHeuristic, currentProblem);
 
 		And currentGoal = new And();
 
 		System.out.print("Serialising goal(s): ");
 		System.out.println(goals);
-		
-		// Clone problem
-		GroundProblem currentProblem = (GroundProblem) ground.clone();
 
 		// List of plans
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();

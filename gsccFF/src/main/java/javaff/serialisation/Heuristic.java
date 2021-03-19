@@ -6,5 +6,6 @@ package javaff.serialisation;
 public enum Heuristic {
 	NONE,
 	RANDOM,
-	GROUPED
+	RPGASCENDING,
+	RPGDESCENDING
 }
