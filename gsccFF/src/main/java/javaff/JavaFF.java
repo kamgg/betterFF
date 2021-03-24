@@ -504,6 +504,8 @@ public class JavaFF
 				System.out.println("Final plan length is " + tsp.actions.size());
 			}
 
+			double totalTime = planningEHCTime + planningBFSTime;
+			infoOutput.println("Total Plan Time = " + totalTime + "sec");
 			infoOutput.println("EHC Plan Time = " + planningEHCTime + "sec");
 			infoOutput.println("BFS Plan Time = " + planningBFSTime + "sec");
 		}
@@ -579,6 +581,7 @@ public class JavaFF
 		// List of plans
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
 
+		long startTime = System.nanoTime();
 		// Iterate through every fact in goal
 		for (Fact fact : wrappedGoals) {
 			currentGoal.add(fact);
@@ -599,6 +602,11 @@ public class JavaFF
 			totalPlanningBFSTime += planData.z;
 			plans.add(planData.x);
 		}
+
+		long endTime = System.nanoTime();
+
+		double totalTime = (endTime - startTime)/JavaFF.Nanos;
+
 		TotalOrderPlan completePlan = new TotalOrderPlan(plans.get(plans.size() - 1).getGoal());
 
 		for (TotalOrderPlan plan : plans) {
@@ -647,6 +655,7 @@ public class JavaFF
 				System.out.println("Final plan length is " + tsp.actions.size());
 			}
 
+			infoOutput.println("Total Plan Time = " + totalTime + "sec");
 			infoOutput.println("EHC Plan Time = " + totalPlanningEHCTime + "sec");
 			infoOutput.println("BFS Plan Time = " + totalPlanningBFSTime + "sec");
 		}
