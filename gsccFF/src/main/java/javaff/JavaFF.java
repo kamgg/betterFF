@@ -56,7 +56,6 @@ import javaff.search.BestFirstSearch;
 import javaff.search.EnforcedHillClimbingSearch;
 import javaff.search.Search;
 import javaff.search.UnreachableGoalException;
-import javaff.util.Triplet;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -75,8 +74,12 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.border.StrokeBorder;
-
 import org.graalvm.compiler.nodes.NodeView.Default;
+import org.apache.commons.cli.*;
+import org.apache.commons.cli.HelpFormatter;
+
+import javaff.serialisation.*;
+import javaff.util.Triplet;
 
 /**
  * An implementation of the FF planner in Java. The planner currently only
@@ -109,12 +112,18 @@ public class JavaFF
 	@Deprecated
 	protected static boolean Deterministic = false;
 
-
 	/**
-	 * This flag determines whether to use goal serialisation on solving the problem.
+	 * This flag is used to determine whether to use goal serialisation on solving the problem.
 	 */
 	protected static boolean GoalSerialisation = false;
 
+
+	/**
+	 * This flag is used to determine whether to use a heuristic, and if so, what heuristic to use with goal serialisation
+	 */
+	protected static Heuristic gsHeuristic = Heuristic.NONE;
+
+	
 	/**
 	 * Returns the hard-coded, static and final PDDL requirements which JavaFF supports.
 	 * @see Requirement
@@ -222,53 +231,73 @@ public class JavaFF
 
 		boolean useOutputFile = false;
 
-
-		// Shoddy arg parser
-		ArrayList<String> parameters = new ArrayList<String>();
+		// Argument parser
+		Options options = new Options();
 		
-		for (int i = 0; i < args.length; i++) {
+		// Options
+		Option domain = new Option("d", "domain", true, "domainFile.pddl");
+		domain.setRequired(true);
+		options.addOption(domain);
 
-			if (args[i].startsWith("-")) {
-				switch(args[i]) {
-					case "--deterministic": {
-						JavaFF.Deterministic = true;
-						break;
-					}
+		Option problem = new Option("p", "problem", true, "problemFile.pddl");
+		problem.setRequired(true);
+		options.addOption(problem);
 
-					case "-D": {
-						JavaFF.Deterministic = true;
-						break;
-					}
+		Option output = new Option("o", "output", true, "outputFile.sol");
+		output.setRequired(false);
+		options.addOption(output);
 
-					case "--goal-serialisation": {
-						JavaFF.GoalSerialisation = true;
-						break;
-					}
+		Option deterministic = new Option("D", "deterministic", false, "Deterministic?");
+		deterministic.setRequired(false);
+		options.addOption(deterministic);
 
-					case "-G": {
-						JavaFF.GoalSerialisation = true;
-						break;
-					}
-					default:
-					System.out.println("Invalid option: '" + args[i] + "'");
+		Option goalSerialisation = new Option("g", "goal-serialisation", false, "Goal serialisation?");
+		goalSerialisation.setRequired(false);
+		options.addOption(goalSerialisation);
+		
+		String allHeuristics = "";
+        Heuristic[] heuristics = Heuristic.values();
 
-				}
-			} else {
-				parameters.add(args[i]);
-			}
+        for (int i = 0; i < heuristics.length; i++) {
+            if (i + 1 < heuristics.length) {
+                allHeuristics += heuristics[i] + ", ";
+            } else {
+                allHeuristics += heuristics[i];
+            }
+        }
 
-		}
+		Option heuristic = new Option("h", "heuristic", true, "Heuristic to use with goal serialisation. (default: NONE) [" + allHeuristics + "]");
+		heuristic.setRequired(false);
+		options.addOption(heuristic);
 
-		if (parameters.size() < 2) {
-			System.out.println("Parameters needed: [options] domainFile.pddl problemFile.pddl [outputfile.sol]");
-		} else {
-			File domainFile = new File(parameters.get(0));
-			File problemFile = new File(parameters.get(1));
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine cmd;
+
+		try {
+			cmd = parser.parse(options, args);
+			JavaFF.Deterministic = cmd.hasOption("deterministic");
+			JavaFF.GoalSerialisation = cmd.hasOption("goal-serialisation");
+
+			File domainFile = new File(cmd.getOptionValue("domain"));
+			File problemFile = new File(cmd.getOptionValue("problem"));
 			File solutionFile = null;
 
-			if (parameters.size() > 2) {
-				solutionFile = new File(parameters.get(2));
+			// If an output file has been specified, use it
+			if (cmd.hasOption("output")) {
+				solutionFile = new File(cmd.getOptionValue("output"));
 				useOutputFile = true;
+			}
+
+			// If a heuristic has been specified, use it
+			if (cmd.hasOption("heuristic")) {
+				try {
+					JavaFF.gsHeuristic = Heuristic.valueOf(cmd.getOptionValue("heuristic").toUpperCase());
+					System.out.println(JavaFF.gsHeuristic);
+				} catch(IllegalArgumentException e) {
+					System.out.println("Invalid heuristic specified.");
+					System.exit(1);
+				}
 			}
 
 			try {
@@ -279,6 +308,11 @@ public class JavaFF
 			} catch (ParseException e) {
 				System.out.println(e.getMessage());
 			}
+		} catch (org.apache.commons.cli.ParseException e) {
+			System.out.println(e.getMessage());
+            formatter.printHelp("JavaFF", options);
+
+            System.exit(1);
 		}
 	}
 
@@ -470,6 +504,8 @@ public class JavaFF
 				System.out.println("Final plan length is " + tsp.actions.size());
 			}
 
+			double totalTime = planningEHCTime + planningBFSTime;
+			infoOutput.println("Total Plan Time = " + totalTime + "sec");
 			infoOutput.println("EHC Plan Time = " + planningEHCTime + "sec");
 			infoOutput.println("BFS Plan Time = " + planningBFSTime + "sec");
 		}
@@ -503,7 +539,7 @@ public class JavaFF
 
 		if (goalState != null)
 		{
-			System.out.println("Found EHC plan: ");
+			System.out.println("Found EHC plan");
 			plan = (TotalOrderPlan) goalState.getSolution();
 			plan.setFinalState(goalState);
 		}
@@ -519,7 +555,7 @@ public class JavaFF
 			{
 				plan = (TotalOrderPlan) goalState.getSolution();
 				plan.setFinalState(goalState);
-				System.out.println("Found BFS plan: ");
+				System.out.println("Found BFS plan");
 			}
 		}
 
@@ -530,23 +566,24 @@ public class JavaFF
 		// Time variables
 		double totalPlanningEHCTime = 0;
 		double totalPlanningBFSTime = 0;
+		// Clone problem
+		GroundProblem currentProblem = (GroundProblem) ground.clone();
 
 		// Goals
 		And goals = (And) ground.getGoal();
-		
+		GoalWrapper wrappedGoals = new GoalWrapper(goals, JavaFF.gsHeuristic, currentProblem);
+
 		And currentGoal = new And();
 
 		System.out.print("Serialising goal(s): ");
 		System.out.println(goals);
-		
-		// Clone problem
-		GroundProblem currentProblem = (GroundProblem) ground.clone();
 
 		// List of plans
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
 
+		long startTime = System.nanoTime();
 		// Iterate through every fact in goal
-		for (Fact fact : goals.getFacts()) {
+		for (Fact fact : wrappedGoals) {
 			currentGoal.add(fact);
 			System.out.println("Running planner on goal(s): " + currentGoal);
 			currentProblem.setGoal(currentGoal);
@@ -565,6 +602,11 @@ public class JavaFF
 			totalPlanningBFSTime += planData.z;
 			plans.add(planData.x);
 		}
+
+		long endTime = System.nanoTime();
+
+		double totalTime = (endTime - startTime)/JavaFF.Nanos;
+
 		TotalOrderPlan completePlan = new TotalOrderPlan(plans.get(plans.size() - 1).getGoal());
 
 		for (TotalOrderPlan plan : plans) {
@@ -613,6 +655,7 @@ public class JavaFF
 				System.out.println("Final plan length is " + tsp.actions.size());
 			}
 
+			infoOutput.println("Total Plan Time = " + totalTime + "sec");
 			infoOutput.println("EHC Plan Time = " + totalPlanningEHCTime + "sec");
 			infoOutput.println("BFS Plan Time = " + totalPlanningBFSTime + "sec");
 		}
