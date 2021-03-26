@@ -3,13 +3,13 @@ import tempfile
 import sys, getopt
 from threading import Timer
 
-# Options & domains
+# Options & problems
 options = {
     "only-gs": ["gs"],
     "gs-random": ["gs", "rand"],
     "gs-rpgascending": ["gs", "rpg", "asc"],
     "gs-rpgdescending": ["gs", "rpg", "desc"],
-    "no-gs": [],
+    "no-gs": []
 }
 
 problems = {
@@ -17,8 +17,9 @@ problems = {
     "satellite": [[str(i)] for i in range(1, 21)],
     "driverlog": [[str(i)] for i in range(1, 21)],
     "elevators": [[str(i), str(j)] for i in range(1, 31) for j in range(5)],
-    "freecell": [[str(i)] for i in range(1, 21)],
+    "freecell": [[str(i)] for i in range(1, 21)]
 }
+
 additional_problems = {
     "frecell-addiitonal": [[str(i), str(j)] for i in range(2, 14) for j in range(1, 6)]
 }
@@ -99,4 +100,18 @@ def test_all_options(domain):
 
 
 
-test_all_options("rovers")
+def test_on(domains):
+    for domain in domains:
+        test_all_options(domain)
+
+def test_on_options(domains):
+    for domain in domains:
+        for option in domains[domain]:
+            test_domain(domain, option)
+
+
+domains = {
+    "driverlog": ["gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
+} 
+
+test_on_options(domains)
