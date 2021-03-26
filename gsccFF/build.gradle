@@ -148,6 +148,40 @@ dependencies {
     args "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}.plan"
   }
 }
+// Additional problems
+(2..13).each { number1 -> 
+  (1..5).each { number2 ->
+    tasks.register("freecell-gs-${number1}-${number2}", JavaExec) {
+      classpath = sourceSets.main.runtimeClasspath
+      main = 'javaff.JavaFF'
+      args "-g", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+    }
+
+    tasks.register("freecell-gs-rand-${number1}-${number2}", JavaExec) {
+      classpath = sourceSets.main.runtimeClasspath
+      main = 'javaff.JavaFF'
+      args "-g", "-h", "random", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+    }
+
+    tasks.register("freecell-gs-rpg-asc-${number1}-${number2}", JavaExec) {
+      classpath = sourceSets.main.runtimeClasspath
+      main = 'javaff.JavaFF'
+      args "-g", "-h", "rpgascending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+    }
+
+    tasks.register("freecell-gs-rpg-desc-${number1}-${number2}", JavaExec) {
+      classpath = sourceSets.main.runtimeClasspath
+      main = 'javaff.JavaFF'
+      args "-g", "-h", "rpgdescending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+    }
+
+    tasks.register("freecell-${number1}-${number2}", JavaExec) {
+      classpath = sourceSets.main.runtimeClasspath
+      main = 'javaff.JavaFF'
+      args "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}.plan"
+    }
+  }
+}
 
 // Elevators domain
 (1..30).each { number1 ->

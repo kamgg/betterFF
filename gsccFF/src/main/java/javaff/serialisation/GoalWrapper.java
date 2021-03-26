@@ -71,7 +71,6 @@ public class GoalWrapper implements Iterable<Fact> {
 
                     Pair<Integer, Fact> pair = new Pair(HValue, fact);
                     queue.add(pair);
-                    System.out.println(HValue);
 
                     originalStateGoal.remove(fact);
                     currentState.goal = originalStateGoal;
