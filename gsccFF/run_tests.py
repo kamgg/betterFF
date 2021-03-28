@@ -25,12 +25,9 @@ additional_problems = {
 }
 
 # Run gradle task
-def run_task(task_name, timeout=300):
-    
-
+def run_task(task_name, timeout=310):
     with tempfile.TemporaryFile() as tempout, tempfile.TemporaryFile() as temperr:
-        proc = subprocess.Popen("gradle --no-daemon {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
-        
+        proc = subprocess.Popen("gradle {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
         # Timer
         timer = Timer(timeout, lambda process: process.kill(), [proc])
 
@@ -39,7 +36,8 @@ def run_task(task_name, timeout=300):
             proc.wait()
         finally:
             timer.cancel()
-            proc.kill()
+            stop = subprocess.Popen("gradle --stop", shell=True)
+            stop.wait()
 
         # If there's an error, write error to file
         if proc.returncode > 0:
@@ -48,6 +46,7 @@ def run_task(task_name, timeout=300):
                 error.write(temperr.read().decode("utf-8"))
                 return (proc.returncode, None)
         tempout.seek(0)
+
         return (proc.returncode, tempout.read().decode("utf-8"))
 
 def run_domain(domain, params, problem):
@@ -76,24 +75,40 @@ def run_domain(domain, params, problem):
 def test_domain(domain, option):
     problems_in_domain = problems[domain]
     params = options[option]
-    results = {}
     
     print("Running on {} with {}: ".format(domain, "-".join(params)))
+
+    with open("test_results/{}/{}-{}.csv".format(domain, domain, option), 'w') as file:
+        file.write("problem,planLength,totalTime,ehcTime,bfsTime\n")
+
     for problem in problems_in_domain:
         problem_label = "-".join(problem)
         print("Problem {}...".format(problem_label))
-        results[problem_label] = run_domain(domain, params, problem)
+        res = run_domain(domain, params, problem)
         print("Done.")
-        
-    with open("test_results/{}/{}-{}.csv".format(domain, domain, option), 'w') as file:
-        file.write("problem,planLength,totalTime,ehcTime,bfsTime\n")
-        for result in results:
-            res = results[result]
-            if res[0] == False:
-                file.write("{},-,-,-,-\n".format(result))
-            else:
-                file.write("{},{},{},{},{}\n".format(result, res[1], res[2], res[3], res[4]))
 
+        with open("test_results/{}/{}-{}.csv".format(domain, domain, option), 'a+') as file:
+            if res[0] == False:
+                file.write("{},-,-,-,-\n".format(problem_label))
+            else:
+                file.write("{},{},{},{},{}\n".format(problem_label, res[1], res[2], res[3], res[4]))
+
+def test_domain_on(domain, option, problems_in_domain):
+    params = options[option]
+    
+    print("Running on {} with {}: ".format(domain, "-".join(params)))
+
+    for problem in problems_in_domain:
+        problem_label = "-".join(problem)
+        print("Problem {}...".format(problem_label))
+        res = run_domain(domain, params, problem)
+        print("Done.")
+
+        with open("test_results/{}/{}-{}.csv".format(domain, domain, option), 'a+') as file:
+            if res[0] == False:
+                file.write("{},-,-,-,-\n".format(problem_label))
+            else:
+                file.write("{},{},{},{},{}\n".format(problem_label, res[1], res[2], res[3], res[4]))
 
 def test_all_options(domain):
     for option in options:
@@ -111,9 +126,13 @@ def test_on_options(domains):
             test_domain(domain, option)
 
 
+
+
 domains = {
-    "driverlog": ["no-gs"],
-    # "freecell": ["only-gs", "gs-rand", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
+    "freecell": ["only-gs", "gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
 } 
+
+# test_on_options(domains)
+test_domain_on("driverlog", "no-gs", problems["driverlog"][15:21])
 
 test_on_options(domains)

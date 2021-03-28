@@ -518,8 +518,9 @@ public class JavaFF
 		return plan;
 	}
 
-	protected Triplet<TotalOrderPlan, Double, Double> performSinglePlanGS(GroundProblem ground, State initialState) throws UnreachableGoalException 
+	protected Triplet<TotalOrderPlan, Double, Double> performSinglePlanGS(GroundProblem ground, State initialState, And goal) throws UnreachableGoalException 
 	{
+		ground.setGoal(goal);
 		long startTime = System.nanoTime();
 		long afterBFSPlanning, afterEHCPlanning = 0;
 		double planningEHCTime = 0;
@@ -586,7 +587,6 @@ public class JavaFF
 		for (Fact fact : wrappedGoals) {
 			currentGoal.add(fact);
 			System.out.println("Running planner on goal(s): " + currentGoal);
-			currentProblem.setGoal(currentGoal);
 			
 			// If there has been a prior plan, update the initial state to be the final state of the previous plan
 			if (plans.size() != 0) {
@@ -597,7 +597,7 @@ public class JavaFF
 			}
 
 			STRIPSState initialState = currentProblem.recomputeSTRIPSInitialState();
-			Triplet<TotalOrderPlan, Double, Double> planData = this.performSinglePlanGS(currentProblem, initialState);
+			Triplet<TotalOrderPlan, Double, Double> planData = this.performSinglePlanGS(currentProblem, initialState, currentGoal);
 			totalPlanningEHCTime += planData.y;
 			totalPlanningBFSTime += planData.z;
 			plans.add(planData.x);
