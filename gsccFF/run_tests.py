@@ -29,7 +29,7 @@ def run_task(task_name, timeout=300):
     
 
     with tempfile.TemporaryFile() as tempout, tempfile.TemporaryFile() as temperr:
-        proc = subprocess.Popen("gradle {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
+        proc = subprocess.Popen("gradle --no-daemon {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
         
         # Timer
         timer = Timer(timeout, lambda process: process.kill(), [proc])
@@ -39,6 +39,7 @@ def run_task(task_name, timeout=300):
             proc.wait()
         finally:
             timer.cancel()
+            proc.kill()
 
         # If there's an error, write error to file
         if proc.returncode > 0:
@@ -111,7 +112,8 @@ def test_on_options(domains):
 
 
 domains = {
-    "driverlog": ["gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
+    "driverlog": ["no-gs"],
+    # "freecell": ["only-gs", "gs-rand", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
 } 
 
 test_on_options(domains)

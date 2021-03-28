@@ -1,0 +1,29 @@
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at javaff.data.strips.STRIPSInstantAction.clone(STRIPSInstantAction.java:51)
+	at javaff.data.TotalOrderPlan.clone(TotalOrderPlan.java:87)
+	at javaff.planning.STRIPSState.apply(STRIPSState.java:244)
+	at javaff.planning.State.getNextState(State.java:74)
+	at javaff.planning.State.getNextStates(State.java:84)
+	at javaff.search.BestFirstSearch.updateOpen(BestFirstSearch.java:58)
+	at javaff.search.BestFirstSearch.search(BestFirstSearch.java:105)
+	at javaff.JavaFF.performFFSearch(JavaFF.java:974)
+	at javaff.JavaFF.performSinglePlanGS(JavaFF.java:550)
+	at javaff.JavaFF.performPlanningGS(JavaFF.java:600)
+	at javaff.JavaFF.doSTRIPSPlan(JavaFF.java:438)
+	at javaff.JavaFF.doPlan(JavaFF.java:693)
+	at javaff.JavaFF.doFilePlan(JavaFF.java:736)
+	at javaff.JavaFF.plan(JavaFF.java:382)
+	at javaff.JavaFF.main(JavaFF.java:305)
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':driverlog-gs-rpg-asc-4'.
+> Process 'command 'C:\Program Files\Java\jdk11.0.2\bin\java.exe'' finished with non-zero exit value 1
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 1m 18s
