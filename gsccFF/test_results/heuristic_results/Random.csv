@@ -1,0 +1,6 @@
+﻿domain,totalinstances,solvedinstances,averageplanlength,averagetotaltime,averageehctime,averagebfstime,score,weightedscore
+Driverlog,20,13,20.308 ,1.116 ,0.372 ,0.723 ,15.944 ,0.797 
+Elevators,150,150,68.840 ,0.572 ,0.500 ,0.000 ,189.267 ,1.262 
+Freecell,20,7,31.429 ,55.964 ,13.410 ,42.471 ,4.947 ,0.247 
+Rovers,20,20,36.200 ,0.723 ,0.635 ,0.000 ,25.812 ,1.291 
+Satellite,20,20,40.250 ,0.786 ,0.611 ,0.000 ,24.013 ,1.201 
