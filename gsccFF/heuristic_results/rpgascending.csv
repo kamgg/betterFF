@@ -1,4 +1,4 @@
-﻿domain,totalinstances,solvedinstances,averageplanlength,averagetotaltime,averageehctime,averagebfstime,score,weightedscore
+domain,totalinstances,solvedinstances,averageplanlength,averagetotaltime,averageehctime,averagebfstime,score,weightedscore
 Driverlog,20,13,20.308 ,0.982 ,0.291 ,0.645 ,15.881 ,0.794 
 Elevators,150,150,68.847 ,0.680 ,0.454 ,0.000 ,185.037 ,1.234 
 Freecell,20,7,31.429 ,55.317 ,13.498 ,39.958 ,4.798 ,0.240 
