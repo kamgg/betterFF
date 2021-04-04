@@ -145,117 +145,117 @@ public class GoalWrapper implements Iterable<Fact> {
             }
 
             // Calculates RPG heuristic every iteration
-            // case RPGDESCENDING: {
-            //     it = new Iterator<Fact>() {
-            //         // Open & closed lists to store which goals have already been seen
-            //         ArrayList<Fact> open = (ArrayList<Fact>) goals.clone();
-            //         ArrayList<Fact> closed = new ArrayList<Fact>();
+            case INRPGDESCENDING: {
+                it = new Iterator<Fact>() {
+                    // Open & closed lists to store which goals have already been seen
+                    ArrayList<Fact> open = (ArrayList<Fact>) goals.clone();
+                    ArrayList<Fact> closed = new ArrayList<Fact>();
                     
-            //         // RPG used to calculate heuristic
-            //         RelaxedPlanningGraph rpg = new RelaxedPlanningGraph(problem, goal);
+                    // RPG used to calculate heuristic
+                    RelaxedPlanningGraph rpg = new RelaxedPlanningGraph(problem, goal);
 
-            //         @Override
-            //         public boolean hasNext() {
-            //             return open.size() > 0;
-            //         }
+                    @Override
+                    public boolean hasNext() {
+                        return open.size() > 0;
+                    }
 
-            //         @Override
-            //         public Fact next() {
-            //             // Get current state & goal in problem
-            //             STRIPSState currentState = (STRIPSState) problem.getState();
-            //             And originalStateGoal = (And) currentState.goal;
+                    @Override
+                    public Fact next() {
+                        // Get current state & goal in problem
+                        STRIPSState currentState = (STRIPSState) problem.getState();
+                        And originalStateGoal = (And) currentState.goal;
 
-            //             // For remaining goals in open list, select goal with smallest RPG heuristic as next node to serialise.
-            //             int minHValue = Integer.MAX_VALUE;
-            //             int index = -1;
+                        // For remaining goals in open list, select goal with smallest RPG heuristic as next node to serialise.
+                        int minHValue = Integer.MAX_VALUE;
+                        int index = -1;
 
-            //             for (int i = 0; i < open.size(); i++) {
-            //                 Fact fact = open.get(i);
+                        for (int i = 0; i < open.size(); i++) {
+                            Fact fact = open.get(i);
 
-            //                 // Might not be necessary to set currentState.goal again
-            //                 originalStateGoal.add(fact);
-            //                 currentState.goal = originalStateGoal;
+                            // Might not be necessary to set currentState.goal again
+                            originalStateGoal.add(fact);
+                            currentState.goal = originalStateGoal;
 
-            //                 int HValue = rpg.getPlan(currentState).getPlanLength();
+                            int HValue = rpg.getPlan(currentState).getPlanLength();
 
-            //                 if (HValue <= minHValue) {
-            //                     minHValue = HValue;
-            //                     index = i;
-            //                 }
+                            if (HValue <= minHValue) {
+                                minHValue = HValue;
+                                index = i;
+                            }
 
-            //                 originalStateGoal.remove(fact);
-            //                 currentState.goal = originalStateGoal;
-            //             }
+                            originalStateGoal.remove(fact);
+                            currentState.goal = originalStateGoal;
+                        }
                         
-            //             Fact fact = open.remove(index);
-            //             closed.add(fact);
-            //             return fact;
-            //         }
+                        Fact fact = open.remove(index);
+                        closed.add(fact);
+                        return fact;
+                    }
 
-            //         @Override
-            //         public void remove() {
-            //             throw new UnsupportedOperationException();
-            //         }
-            //     };
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
 
-            //     break;
-            // }
+                break;
+            }
 
-            // case RPGASCENDING: {
-            //     it = new Iterator<Fact>() {
-            //         // Open & closed lists to store which goals have already been seen
-            //         ArrayList<Fact> open = (ArrayList<Fact>) goals.clone();
-            //         ArrayList<Fact> closed = new ArrayList<Fact>();
+            case INRPGASCENDING: {
+                it = new Iterator<Fact>() {
+                    // Open & closed lists to store which goals have already been seen
+                    ArrayList<Fact> open = (ArrayList<Fact>) goals.clone();
+                    ArrayList<Fact> closed = new ArrayList<Fact>();
                     
-            //         // RPG used to calculate heuristic
-            //         RelaxedPlanningGraph rpg = new RelaxedPlanningGraph(problem, goal);
+                    // RPG used to calculate heuristic
+                    RelaxedPlanningGraph rpg = new RelaxedPlanningGraph(problem, goal);
 
-            //         @Override
-            //         public boolean hasNext() {
-            //             return open.size() > 0;
-            //         }
+                    @Override
+                    public boolean hasNext() {
+                        return open.size() > 0;
+                    }
 
-            //         @Override
-            //         public Fact next() {
-            //             // Get current state & goal in problem
-            //             STRIPSState currentState = (STRIPSState) problem.getState();
-            //             And originalStateGoal = (And) currentState.goal;
+                    @Override
+                    public Fact next() {
+                        // Get current state & goal in problem
+                        STRIPSState currentState = (STRIPSState) problem.getState();
+                        And originalStateGoal = (And) currentState.goal;
 
-            //             // For remaining goals in open list, select goal with largest RPG heuristic as next node to serialise.
-            //             int maxHValue = Integer.MIN_VALUE;
-            //             int index = -1;
+                        // For remaining goals in open list, select goal with largest RPG heuristic as next node to serialise.
+                        int maxHValue = Integer.MIN_VALUE;
+                        int index = -1;
 
-            //             for (int i = 0; i < open.size(); i++) {
-            //                 Fact fact = open.get(i);
+                        for (int i = 0; i < open.size(); i++) {
+                            Fact fact = open.get(i);
 
-            //                 // Might not be necessary to set currentState.goal again
-            //                 originalStateGoal.add(fact);
-            //                 currentState.goal = originalStateGoal;
+                            // Might not be necessary to set currentState.goal again
+                            originalStateGoal.add(fact);
+                            currentState.goal = originalStateGoal;
 
-            //                 int HValue = rpg.getPlan(currentState).getPlanLength();
+                            int HValue = rpg.getPlan(currentState).getPlanLength();
 
-            //                 if (HValue >= maxHValue) {
-            //                     maxHValue = HValue;
-            //                     index = i;
-            //                 }
+                            if (HValue >= maxHValue) {
+                                maxHValue = HValue;
+                                index = i;
+                            }
 
-            //                 originalStateGoal.remove(fact);
-            //                 currentState.goal = originalStateGoal;
-            //             }
+                            originalStateGoal.remove(fact);
+                            currentState.goal = originalStateGoal;
+                        }
                         
-            //             Fact fact = open.remove(index);
-            //             closed.add(fact);
-            //             return fact;
-            //         }
+                        Fact fact = open.remove(index);
+                        closed.add(fact);
+                        return fact;
+                    }
 
-            //         @Override
-            //         public void remove() {
-            //             throw new UnsupportedOperationException();
-            //         }
-            //     };
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
 
-            //     break;
-            // }
+                break;
+            }
 
             default:
                 it = goals.iterator();
