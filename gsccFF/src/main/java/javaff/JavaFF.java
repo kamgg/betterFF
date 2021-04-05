@@ -235,19 +235,19 @@ public class JavaFF
 		Options options = new Options();
 		
 		// Options
-		Option domain = new Option("d", "domain", true, "domainFile.pddl");
+		Option domain = new Option("o", "domain", true, "domainFile.pddl");
 		domain.setRequired(true);
 		options.addOption(domain);
 
-		Option problem = new Option("p", "problem", true, "problemFile.pddl");
+		Option problem = new Option("f", "problem", true, "problemFile.pddl");
 		problem.setRequired(true);
 		options.addOption(problem);
 
-		Option output = new Option("o", "output", true, "outputFile.sol");
+		Option output = new Option("w", "output", true, "outputFile.sol");
 		output.setRequired(false);
 		options.addOption(output);
 
-		Option deterministic = new Option("D", "deterministic", false, "Deterministic?");
+		Option deterministic = new Option("d", "deterministic", false, "Deterministic?");
 		deterministic.setRequired(false);
 		options.addOption(deterministic);
 

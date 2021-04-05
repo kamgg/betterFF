@@ -22,7 +22,7 @@ jar {
   from {
     configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
   }
-  
+
   manifest {
     attributes(
       'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
@@ -37,43 +37,43 @@ jar {
   tasks.register("rovers-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
   
   tasks.register("rovers-gs-rand-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "random", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "random", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-gs-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgascending", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgascending", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-gs-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgdescending", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgdescending", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-gs-in-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgascending", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgascending", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-gs-in-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgdescending", "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgdescending", "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("rovers-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-d", "test_problems/rovers/domain.pddl", "-p", "test_problems/rovers/problems/pfile${number}.pddl", "-o", "test_problems/rovers/plans/pfile${number}.plan"
+    args "-o", "test_problems/rovers/domain.pddl", "-f", "test_problems/rovers/problems/pfile${number}.pddl", "-w", "test_problems/rovers/plans/pfile${number}.plan"
   }
 
 
@@ -84,43 +84,43 @@ jar {
   tasks.register("driverlog-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-gs-rand-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "random", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "random", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-gs-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgascending", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgascending", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-gs-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgdescending", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgdescending", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-gs-in-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgascending", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgascending", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-gs-in-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgdescending", "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgdescending", "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("driverlog-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-d", "test_problems/driverlog/domain.pddl", "-p", "test_problems/driverlog/problems/pfile${number}.pddl", "-o", "test_problems/driverlog/plans/pfile${number}.plan"
+    args "-o", "test_problems/driverlog/domain.pddl", "-f", "test_problems/driverlog/problems/pfile${number}.pddl", "-w", "test_problems/driverlog/plans/pfile${number}.plan"
   }
 }
 
@@ -129,43 +129,43 @@ jar {
   tasks.register("satellite-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
   
   tasks.register("satellite-gs-rand-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "random", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "random", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("satellite-gs-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgascending", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgascending", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("satellite-gs-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgdescending", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgdescending", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("satellite-gs-in-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgascending", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgascending", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("satellite-gs-in-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgdescending", "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgdescending", "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}_w_gs.plan"
   }
   
   tasks.register("satellite-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-d", "test_problems/satellite/domain.pddl", "-p", "test_problems/satellite/problems/pfile${number}.pddl", "-o", "test_problems/satellite/plans/pfile${number}.plan"
+    args "-o", "test_problems/satellite/domain.pddl", "-f", "test_problems/satellite/problems/pfile${number}.pddl", "-w", "test_problems/satellite/plans/pfile${number}.plan"
   }
 }
 
@@ -174,43 +174,43 @@ jar {
   tasks.register("freecell-gs-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("freecell-gs-rand-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "random", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "random", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("freecell-gs-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgascending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgascending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("freecell-gs-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "rpgdescending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "rpgdescending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("freecell-gs-in-rpg-asc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgascending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgascending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
 
   tasks.register("freecell-gs-in-rpg-desc-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-g", "-h", "inrpgdescending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
+    args "-g", "-h", "inrpgdescending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}_w_gs.plan"
   }
   
   tasks.register("freecell-${number}", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'javaff.JavaFF'
-    args "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/problems/pfile${number}.pddl", "-o", "test_problems/freecell/plans/pfile${number}.plan"
+    args "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/problems/pfile${number}.pddl", "-w", "test_problems/freecell/plans/pfile${number}.plan"
   }
 }
 // Additional problems
@@ -219,43 +219,43 @@ jar {
     tasks.register("freecell-gs-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-gs-rand-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "random", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "random", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-gs-rpg-asc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "rpgascending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "rpgascending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-gs-rpg-desc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "rpgdescending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "rpgdescending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-gs-in-rpg-asc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "inrpgascending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "inrpgascending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-gs-in-rpg-desc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "inrpgdescending", "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "inrpgdescending", "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("freecell-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-d", "test_problems/freecell/domain.pddl", "-p", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-o", "test_problems/freecell/plans/probfreecell-${number1}-${number2}.plan"
+      args "-o", "test_problems/freecell/domain.pddl", "-f", "test_problems/freecell/additional_problems/probfreecell-${number1}-${number2}.pddl", "-w", "test_problems/freecell/plans/probfreecell-${number1}-${number2}.plan"
     }
   }
 }
@@ -266,43 +266,43 @@ jar {
     tasks.register("elevators-gs-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-gs-rand-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "random", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "random", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-gs-rpg-asc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "rpgascending", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "rpgascending", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-gs-rpg-desc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "rpgdescending", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "rpgdescending", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-gs-in-rpg-asc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "inrpgascending", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "inrpgascending", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-gs-in-rpg-desc-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-g", "-h", "inrpgdescending", "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
+      args "-g", "-h", "inrpgdescending", "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}_w_gs.plan"
     }
 
     tasks.register("elevators-${number1}-${number2}", JavaExec) {
       classpath = sourceSets.main.runtimeClasspath
       main = 'javaff.JavaFF'
-      args "-d", "test_problems/elevators/domain.pddl", "-p", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-o", "test_problems/elevators/plans/s${number1}-${number2}.plan"
+      args "-o", "test_problems/elevators/domain.pddl", "-f", "test_problems/elevators/problems/s${number1}-${number2}.pddl", "-w", "test_problems/elevators/plans/s${number1}-${number2}.plan"
     }
   }
 }
