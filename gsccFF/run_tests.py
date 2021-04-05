@@ -1,6 +1,6 @@
 import subprocess
 import tempfile
-import sys, getopt
+import sysy
 from threading import Timer
 
 # Options & problems

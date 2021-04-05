@@ -8,10 +8,27 @@ repositories {
 	  jcenter()
 }
 
+configurations {
+  extraLibs
+}
+
 dependencies {
-    implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
-    implementation("org.graalvm.compiler:compiler:21.0.0")
-    implementation(group: "commons-cli", name: "commons-cli", version: "1.4")
+    extraLibs implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
+    extraLibs implementation("org.graalvm.compiler:compiler:21.0.0")
+    extraLibs implementation(group: "commons-cli", name: "commons-cli", version: "1.4")
+}
+
+jar {
+  from {
+    configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+  
+  manifest {
+    attributes(
+      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Main-Class': 'javaff.JavaFF'
+    )
+  }
 }
 
 
