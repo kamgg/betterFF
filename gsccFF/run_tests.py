@@ -1,6 +1,6 @@
 import subprocess
 import tempfile
-import sysy
+import sys
 from threading import Timer
 
 # Options & problems
@@ -27,7 +27,7 @@ additional_problems = {
 # Run gradle task
 def run_task(task_name, timeout=310):
     with tempfile.TemporaryFile() as tempout, tempfile.TemporaryFile() as temperr:
-        proc = subprocess.Popen("gradle {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
+        proc = subprocess.Popen("gradle --warning-mode all {}".format(task_name), stdout=tempout, stderr=temperr, shell=True)
         # Timer
         timer = Timer(timeout, lambda process: process.kill(), [proc])
 
@@ -129,10 +129,10 @@ def test_on_options(domains):
 
 
 domains = {
-    "freecell": ["only-gs", "gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
+    "satellite": ["only-gs", "gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
 } 
 
 # test_on_options(domains)
-test_domain_on("driverlog", "no-gs", problems["driverlog"][15:21])
+# test_domain_on("driverlog", "no-gs", problems["driverlog"][15:21])
 
 test_on_options(domains)

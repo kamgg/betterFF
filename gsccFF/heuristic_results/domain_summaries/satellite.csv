@@ -1,6 +1,6 @@
 implementationheuristic,totalinstances,solvedinstances,averageplanlength,averagetotaltime,averageehctime,averagebfstime,Score,weightedscore
-Baseline,20,20,40.900,7.305,7.305,0.000,21.269,1.063
-Goal serialisation,20,20,39.600,0.826,0.620,0.000,23.893,1.195
-Random Heuristic,20,20,40.250,0.786,0.611,0.000,24.013,1.201
-RPG Ascending Heuristic,20,20,41.800,1.149,0.614,0.000,22.779,1.139
-RPG Descending Heuristic,20,20,39.600,1.089,0.547,0.000,22.907,1.145
+Baseline,20,20,40.900,8.534,8.534,0.000,21.033,1.052
+Goal serialisation,20,20,40.300,7.188,7.012,0.000,20.753,1.038
+Random Heuristic,20,20,40.700,7.186,7.009,0.000,20.623,1.031
+RPG Ascending Heuristic,20,20,40.800,7.626,7.077,0.000,20.274,1.014
+RPG Descending Heuristic,20,20,40.800,7.573,7.011,0.000,20.238,1.012
