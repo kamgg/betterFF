@@ -1,6 +1,5 @@
 import subprocess
 import tempfile
-import sys
 from threading import Timer
 
 # Note that test script will not work without adjustments to certain parameters, 
@@ -127,12 +126,18 @@ def test_on(domains):
     for domain in domains:
         test_all_options(domain)
 
-# Test all domains with heuristics specified in input
-# For example:
-# domains = {
-#     "driverlog": ["only-gs"]
-# } 
+# Test all domains with heuristics specified in inpu
 def test_on_options(domains):
     for domain in domains:
         for option in domains[domain]:
             test_domain(domain, option)
+# An example input:
+# domains = {
+#     "driverlog": ["only-gs"]
+# } 
+
+domains = {
+    "rovers": ["no-gs"]
+} 
+
+test_on_options(domains)
