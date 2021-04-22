@@ -20,7 +20,7 @@ import javaff.util.Pair;
 
 /**
  * GoalWrapper used to determine the order in which to iterate a set of goals.
- * @Author Kamal Asmatpoor
+ * @author Kamal Asmatpoor
  * @version 1.0
  */
 public class GoalWrapper implements Iterable<Fact> {

@@ -7,7 +7,7 @@ import javaff.data.Fact;
 
 /**
  * Comparator for use with a Priority Queue.
- * @Author Kamal Asmatpoor
+ * @author Kamal Asmatpoor
  * @version 1.0
  */
 class RPGPairComparatorDescending implements Comparator<Pair<Integer, Fact>> {
@@ -29,7 +29,7 @@ class RPGPairComparatorDescending implements Comparator<Pair<Integer, Fact>> {
 }
 /**
  * Comparator for use with a Priority Queue.
- * @Author Kamal Asmatpoor
+ * @author Kamal Asmatpoor
  * @version 1.0
  */
 class RPGPairComparatorAscending implements Comparator<Pair<Integer, Fact>> {
