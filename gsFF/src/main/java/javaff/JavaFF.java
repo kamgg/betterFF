@@ -235,15 +235,15 @@ public class JavaFF
 		Options options = new Options();
 		
 		// Options
-		Option domain = new Option("o", "domain", true, "domainFile.pddl");
+		Option domain = new Option("o", "domain", true, "(required) domainFile.pddl");
 		domain.setRequired(true);
 		options.addOption(domain);
 
-		Option problem = new Option("f", "problem", true, "problemFile.pddl");
+		Option problem = new Option("f", "problem", true, "(required) problemFile.pddl");
 		problem.setRequired(true);
 		options.addOption(problem);
 
-		Option output = new Option("w", "output", true, "outputFile.sol");
+		Option output = new Option("w", "output", true, "outputFile.plan");
 		output.setRequired(false);
 		options.addOption(output);
 
@@ -266,7 +266,7 @@ public class JavaFF
             }
         }
 
-		Option heuristic = new Option("h", "heuristic", true, "Heuristic to use with goal serialisation. (default: NONE) [" + allHeuristics + "]");
+		Option heuristic = new Option("h", "heuristic", true, "euristic to use with goal serialisation in ordering goals. (default: NONE) [" + allHeuristics + "]");
 		heuristic.setRequired(false);
 		options.addOption(heuristic);
 
@@ -310,7 +310,7 @@ public class JavaFF
 			}
 		} catch (org.apache.commons.cli.ParseException e) {
 			System.out.println(e.getMessage());
-            formatter.printHelp("JavaFF", options);
+            formatter.printHelp("JavaFF with Goal Serialisation", options);
 
             System.exit(1);
 		}
