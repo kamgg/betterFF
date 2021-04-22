@@ -52,6 +52,8 @@ public class GoalWrapper implements Iterable<Fact> {
 
             // Calculates RPG heuristic once at the start
             case RPGDESCENDING: {
+                System.out.println("Ordering goals...");
+
                 // Priority queue to store RPG heuristic for each goal
                 PriorityQueue<Pair<Integer, Fact>> queue = new PriorityQueue<Pair<Integer, Fact>>(new RPGPairComparatorDescending());
                 
@@ -68,6 +70,7 @@ public class GoalWrapper implements Iterable<Fact> {
 
                     RelaxedPlan relaxedPlan = rpg.getPlan(currentState);
                     int HValue = relaxedPlan.getPlanLength();
+                    System.out.println(fact + ": " +  HValue + " Added to queue.");
 
                     Pair<Integer, Fact> pair = new Pair(HValue, fact);
                     queue.add(pair);
@@ -75,6 +78,8 @@ public class GoalWrapper implements Iterable<Fact> {
                     originalStateGoal.remove(fact);
                     currentState.goal = originalStateGoal;
                 }
+
+                System.out.println("Done!");
 
                 it = new Iterator<Fact>() {
                     @Override
@@ -99,6 +104,7 @@ public class GoalWrapper implements Iterable<Fact> {
 
             // Calculates RPG heuristic once at the start
             case RPGASCENDING: {
+                System.out.println("Ordering goals...");
                 // Priority queue to store RPG heuristic for each goal
                 PriorityQueue<Pair<Integer, Fact>> queue = new PriorityQueue<Pair<Integer, Fact>>(new RPGPairComparatorAscending());
                 
@@ -115,13 +121,16 @@ public class GoalWrapper implements Iterable<Fact> {
 
                     RelaxedPlan relaxedPlan = rpg.getPlan(currentState);
                     int HValue = relaxedPlan.getPlanLength();
-
+                    System.out.println(fact + ": " +  HValue + " Added to queue.");
+                    
                     Pair<Integer, Fact> pair = new Pair(HValue, fact);
                     queue.add(pair);
                     
                     originalStateGoal.remove(fact);
                     currentState.goal = originalStateGoal;
                 }
+
+                System.out.println("Done!");
 
                 it = new Iterator<Fact>() {
                     @Override

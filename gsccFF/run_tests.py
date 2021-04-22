@@ -63,7 +63,7 @@ def run_domain(domain, params, problem):
         # Response,planLength,totalTime,ehcTime,bfsTime
         return (False, -1, -1.0 , -1.0, -1.0)
     
-    out_split = out.split('\r\n')
+    out_split = out.split('\n')
     plan_length = int(out_split[-9].split(' ')[-1])
     total_time = float(out_split[-8].split(' ')[-1].split('s')[0])
     ehc_time = float(out_split[-7].split(' ')[-1].split('s')[0])
@@ -129,7 +129,7 @@ def test_on_options(domains):
 
 
 domains = {
-    "satellite": ["only-gs", "gs-random", "gs-rpgascending", "gs-rpgdescending", "no-gs"]
+    "driverlog": ["only-gs"]
 } 
 
 # test_on_options(domains)

@@ -1,0 +1,6 @@
+implementationheuristic,averageplanlength,planlengthsd,averagetotaltime,totaltimesd,weightedscore
+Goal serialisation,39.263,18.077,12.810,24.007,4.888
+Random Heuristic,39.495,18.074,13.112,24.115,4.628
+RPG Ascending Heuristic,39.497,18.083,13.141,23.755,4.552
+RPG Descending Heuristic,39.403,18.075,13.695,25.032,4.548
+Baseline,39.565,18.668,17.638,21.225,4.180
