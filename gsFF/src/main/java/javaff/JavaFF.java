@@ -566,6 +566,7 @@ public class JavaFF
 		// Time variables
 		double totalPlanningEHCTime = 0;
 		double totalPlanningBFSTime = 0;
+		
 		// Clone problem
 		GroundProblem currentProblem = (GroundProblem) ground.clone();
 
@@ -577,6 +578,8 @@ public class JavaFF
 
 		System.out.print("Serialising goal(s): ");
 		System.out.println(goals);
+		
+
 
 		// List of plans
 		ArrayList<TotalOrderPlan> plans = new ArrayList<TotalOrderPlan>();
@@ -586,6 +589,7 @@ public class JavaFF
 		for (Fact fact : wrappedGoals) {
 			currentGoal.add(fact);
 			System.out.println("Running planner on goal(s): " + currentGoal);
+			currentProblem.setGoal(currentGoal);
 			
 			// If there has been a prior plan, update the initial state to be the final state of the previous plan
 			if (plans.size() != 0) {
@@ -596,7 +600,6 @@ public class JavaFF
 			}
 
 			STRIPSState initialState = currentProblem.recomputeSTRIPSInitialState();
-			currentProblem.setGoal(currentGoal);
 			Triplet<TotalOrderPlan, Double, Double> planData = this.performSinglePlanGS(currentProblem, initialState);
 			totalPlanningEHCTime += planData.y;
 			totalPlanningBFSTime += planData.z;

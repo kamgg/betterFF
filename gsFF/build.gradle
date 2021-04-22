@@ -8,10 +8,6 @@ repositories {
 	  jcenter()
 }
 
-configurations {
-  extraLibs
-}
-
 dependencies {
     implementation("org.jgrapht:jgrapht-jdk1.5:0.7.3")
     implementation("org.graalvm.compiler:compiler:21.0.0")
@@ -31,7 +27,6 @@ jar {
     )
   }
 }
-
 
 // Rovers domain
 (1..20).each { number ->
