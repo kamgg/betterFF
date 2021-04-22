@@ -3,6 +3,9 @@ import tempfile
 import sys
 from threading import Timer
 
+# Note that test script will not work without adjustments to certain parameters, 
+# primarily in the parsing of the output in run_domain.
+
 # Options & problems
 options = {
     "only-gs": ["gs"],
@@ -49,6 +52,7 @@ def run_task(task_name, timeout=310):
 
         return (proc.returncode, tempout.read().decode("utf-8"))
 
+# Run problem on a domain
 def run_domain(domain, params, problem):
     parameter = "-"
     if len(params) > 0:
@@ -72,6 +76,7 @@ def run_domain(domain, params, problem):
     return (True, plan_length, total_time, ehc_time, bfs_time)
 
 
+# Test all problems in a given domain
 def test_domain(domain, option):
     problems_in_domain = problems[domain]
     params = options[option]
@@ -93,6 +98,7 @@ def test_domain(domain, option):
             else:
                 file.write("{},{},{},{},{}\n".format(problem_label, res[1], res[2], res[3], res[4]))
 
+# Test some problems in a given domain
 def test_domain_on(domain, option, problems_in_domain):
     params = options[option]
     
@@ -110,29 +116,23 @@ def test_domain_on(domain, option, problems_in_domain):
             else:
                 file.write("{},{},{},{},{}\n".format(problem_label, res[1], res[2], res[3], res[4]))
 
+# Test all heuristics on all problems in a given domain
 def test_all_options(domain):
     for option in options:
         test_domain(domain, option)
 
 
-
+# Test all domains with all heuristics
 def test_on(domains):
     for domain in domains:
         test_all_options(domain)
 
+# Test all domains with heuristics specified in input
+# For example:
+# domains = {
+#     "driverlog": ["only-gs"]
+# } 
 def test_on_options(domains):
     for domain in domains:
         for option in domains[domain]:
             test_domain(domain, option)
-
-
-
-
-domains = {
-    "driverlog": ["only-gs"]
-} 
-
-# test_on_options(domains)
-# test_domain_on("driverlog", "no-gs", problems["driverlog"][15:21])
-
-test_on_options(domains)
