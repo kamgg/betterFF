@@ -247,9 +247,9 @@ public class JavaFF
 		output.setRequired(false);
 		options.addOption(output);
 
-		Option deterministic = new Option("d", "deterministic", false, "Deterministic?");
-		deterministic.setRequired(false);
-		options.addOption(deterministic);
+		// Option deterministic = new Option("d", "deterministic", false, "Deterministic? [Deprecated]");
+		// deterministic.setRequired(false);
+		// options.addOption(deterministic);
 
 		Option goalSerialisation = new Option("g", "goal-serialisation", false, "Goal serialisation?");
 		goalSerialisation.setRequired(false);
@@ -276,7 +276,7 @@ public class JavaFF
 
 		try {
 			cmd = parser.parse(options, args);
-			JavaFF.Deterministic = cmd.hasOption("deterministic");
+			// JavaFF.Deterministic = cmd.hasOption("deterministic");
 			JavaFF.GoalSerialisation = cmd.hasOption("goal-serialisation");
 
 			File domainFile = new File(cmd.getOptionValue("domain"));
