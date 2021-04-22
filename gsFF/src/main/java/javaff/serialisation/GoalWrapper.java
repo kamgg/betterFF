@@ -3,7 +3,6 @@ package javaff.serialisation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.PriorityQueue;
 
 import javaff.data.Fact;
@@ -13,20 +12,29 @@ import javaff.planning.STRIPSState;
 import javaff.data.GroundProblem;
 import javaff.data.RelaxedPlan;
 import javaff.planning.RelaxedPlanningGraph;
-import javaff.data.GroundFact;
 
 import javaff.serialisation.Heuristic;
 import javaff.serialisation.RPGPairComparatorDescending;
 import javaff.serialisation.RPGPairComparatorAscending;
 import javaff.util.Pair;
 
+/**
+ * GoalWrapper used to determine the order in which to iterate a set of goals.
+ * @Author Kamal Asmatpoor
+ * @version 1.0
+ */
 public class GoalWrapper implements Iterable<Fact> {
     private And goal;
     private ArrayList<Fact> goals;
     private Heuristic heuristic;
     private GroundProblem problem; 
     
-
+    /**
+     * GoalWrapper constructor.
+     * @param goal goals to wrap.
+     * @param heuristic heuristic to be used for determining goal order.
+     * @param problem a reference to the current problem.
+     */
     public GoalWrapper(And goal, Heuristic heuristic, GroundProblem problem) {
         this.goal = goal;
         this.goals = new ArrayList<Fact>(goal.getFacts());
@@ -34,6 +42,9 @@ public class GoalWrapper implements Iterable<Fact> {
         this.problem = problem;
     }
 
+    /**
+     * Return the relevant iterator according to heuristic specicfied.
+     */
     @Override
     public Iterator<Fact> iterator() {
         Iterator<Fact> it;
