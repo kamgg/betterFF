@@ -1,96 +1,141 @@
-# JavaFF with Goal Serialisation (gsFF)
-Built off of the open-source JavaFF2.1 project as a part of my individual project venturing into Goal Serialisation and Heuristic-based goal ordering.
+# gsFF: Goal Serialisation and Heuristic-Based Goal Ordering
 
+An extension of JavaFF 2.1 exploring how the order in which goals are pursued affects automated planning. Developed by **Kamal Asmatpoor** for a BSc Computer Science dissertation at **King's College London**, supervised by **Dr Amanda Coles**.
 
----
-## Prerequisites
-In order to build the artefact, first install the following
-* Java 11, through [Oracle](oracle.com/java/technologies/javase-jdk11-downloads.html) or [OpenJDK](https://jdk.java.net/archive/),
-* [Gradle 6.4](https://github.com/gradle/gradle/releases/tag/v6.4.0), instructions can be found [here](https://gradle.org/install/).
+**[Read the dissertation (PDF)](http://kamal.codes/static/dissertation.pdf)** — *AI Planning and Goal Serialisation with Heuristic-based Goal Ordering*
 
----
-## Building
-In order to build a fresh copy of the artefact, move into the ``/gsFF`` subdirectory:
-```
+## Research overview
+
+An automated planner takes a description of a domain, an initial state and a set of goals, then searches for a sequence of actions that achieves those goals. This project investigates **goal serialisation**: pursuing goals in an ordered sequence, and comparing ways to choose that order.
+
+The implementation extends JavaFF with:
+
+- Goal serialisation with the existing goal order or a random order.
+- Ascending and descending goal ordering based on a **Relaxed Planning Graph (RPG)** heuristic.
+- Ordering computed before planning, or recomputed during serialisation.
+- Benchmark tasks across five planning domains: Rovers, Elevators, Satellite, Driverlog and Freecell.
+- A Python experiment script and recorded performance data for comparing planning time and plan length.
+
+The main extension is in [`GoalWrapper.java`](gsFF/src/main/java/javaff/serialisation/GoalWrapper.java), with the available strategies defined in [`Heuristic.java`](gsFF/src/main/java/javaff/serialisation/Heuristic.java). See the dissertation for the experimental methodology, results and limitations; the recorded data is a historical research artefact, not a benchmark of current hardware or Java versions.
+
+## Repository layout
+
+| Path | Contents |
+| --- | --- |
+| [`gsFF/`](gsFF/) | Java planner, Gradle build and experiment runner |
+| [`gsFF/test_problems/`](gsFF/test_problems/) | PDDL benchmark domains and problems |
+| [`performance_data/`](performance_data/) | Recorded results, graphs and analysis workbook |
+| [`doc/`](doc/) | Planning and PDDL reference documents |
+| [`res/`](res/) | Bundled planning and validation tools |
+
+## Build
+
+The original project documents **Java 11** and **Gradle 6.4** as prerequisites. There is no Gradle wrapper in this repository, so install Gradle separately. Python 3 is needed only for the experiment script.
+
+From the repository root:
+
+```sh
 cd gsFF
-```
-And run:
-```
-gradle clean && gradle build
+gradle clean build
 ```
 
-This will build an executable jar into ``/build/lib``.
+The build produces the executable JAR at **`build/libs/gsFF.jar`**, relative to `gsFF/`. It includes the runtime dependencies and uses `javaff.JavaFF` as its entry point.
 
----
-## Artefact Usage
-The built artefact can be used by running the following:
+This is the original research build, including legacy dependency declarations; compatibility with newer Java or Gradle versions is not established here.
+
+## Run a planning problem
+
+Run these examples from the `gsFF/` directory after building.
+
+Baseline JavaFF planning, without goal serialisation:
+
+```sh
+java -jar build/libs/gsFF.jar \
+  -o test_problems/rovers/domain.pddl \
+  -f test_problems/rovers/problems/pfile1.pddl
 ```
-java -jar gsFF.jar -g -o <domain> -f <problem>
+
+Enable goal serialisation with ascending RPG-based ordering:
+
+```sh
+java -jar build/libs/gsFF.jar \
+  -g -h RPGASCENDING \
+  -o test_problems/rovers/domain.pddl \
+  -f test_problems/rovers/problems/pfile1.pddl \
+  -w rovers-1.plan
 ```
-Running this command without any options will output a list of viable options as well as the bare minimum required options.
 
-The artefact can be ran with the following command-line options:
+### Command-line options
 
-| Option                          | Description                                                                 |
-|---------------------------------|-----------------------------------------------------------------------------| 
-| -o, --domain ``<domain>``       | (required) domainFile.pddl                                                  |
-| -f, --problem ``<problem>``     | (required) problemFile.pddl                                                 |
-| -w, --output ``<output>``       | outputFile.plan                                                             |
-| -g, --goal-serialisation        | Goal serialisation?                                                         |
-| -h, --heuristic ``<heuristic>`` | Heuristic to use with goal serialisation in ordering goals. (default: NONE) |
+| Option | Description |
+| --- | --- |
+| `-o`, `--domain <path>` | Required: PDDL domain file |
+| `-f`, `--problem <path>` | Required: PDDL problem file |
+| `-w`, `--output <path>` | Optional: output plan file |
+| `-g`, `--goal-serialisation` | Enable goal serialisation |
+| `-h`, `--heuristic <name>` | Goal-ordering strategy; defaults to `NONE` |
 
-Where heuristic is one of the following:
+Here, `-h` selects a heuristic; it is **not** a help flag. Running without arguments prints usage information. Supply `-g` when using a goal-ordering heuristic.
 
-| Heuristics      | Description                             |
-|-----------------|-----------------------------------------|
-| NONE            | Given goal order                        |
-| RANDOM          | Random goal order                       |
-| RPGASCENDING    | Pre-planning RPG-based ascending order  |
-| RPGDESCENDING   | Pre-planning RPG-based descending order | 
-| INRPGASCENDING  | In-planning RPG-based ascending order   | 
-| INRPGDESCENDING | In-planning RPG-based descending order  |
+### Goal-ordering strategies
 
----
-## Gradle Usage
-Gradle is packaged with tasks for the 5 domains on which the planner tested on. To view all gradle tasks, run:
-```
+| CLI value | Strategy | Gradle task suffix |
+| --- | --- | --- |
+| `NONE` | Existing goal order | `gs` |
+| `RANDOM` | Random goal order | `gs-rand` |
+| `RPGASCENDING` | RPG-based ascending order, computed before serialisation | `gs-rpg-asc` |
+| `RPGDESCENDING` | RPG-based descending order, computed before serialisation | `gs-rpg-desc` |
+| `INRPGASCENDING` | RPG-based ascending order, recomputed during serialisation | `gs-in-rpg-asc` |
+| `INRPGDESCENDING` | RPG-based descending order, recomputed during serialisation | `gs-in-rpg-desc` |
+
+Heuristic names are case-insensitive in the command-line parser. Random ordering uses an unseeded shuffle; repeated runs can differ.
+
+## Run the benchmark tasks
+
+The Gradle build defines tasks for individual benchmark problems. Run them from `gsFF/`:
+
+```sh
 gradle tasks --all
+gradle rovers-1
+gradle rovers-gs-1
+gradle rovers-gs-rpg-asc-1
+gradle rovers-gs-rpg-desc-1
+gradle elevators-gs-in-rpg-desc-1-0
 ```
 
-The most basic gradle task, which runs the baseline implementation of JavaFF is:
+Task names follow these patterns:
+
+```text
+<domain>-<problem>                 # baseline, without serialisation
+<domain>-<strategy>-<problem>      # serialisation strategy from the table above
 ```
-gradle <domain>-<problem>
+
+| Domain | Problem identifiers |
+| --- | --- |
+| `rovers`, `satellite`, `driverlog` | `1`–`20` |
+| `freecell` | `1`–`20`; additional problems `<n>-<m>` with `n` in `2`–`13` and `m` in `1`–`5` |
+| `elevators` | `<n>-<m>` with `n` in `1`–`30` and `m` in `0`–`4` |
+
+## Experiment data
+
+[`gsFF/run_tests.py`](gsFF/run_tests.py) is a research experiment runner, not a general-purpose command-line test suite. It invokes Gradle tasks and records plan length and planning times as CSV files.
+
+Before running it:
+
+1. Review the selected domains and strategies at the bottom of the script. The checked-in selection runs the Rovers baseline.
+2. Adjust the output parsing in `run_domain` for the Gradle output in your environment; it relies on fixed line positions.
+3. Check the result and error directories. The script writes under `test_results/` and `test_errors/`, and can overwrite existing results.
+
+Then, from `gsFF/`:
+
+```sh
+python3 run_tests.py
 ```
-| Domains   |
-|-----------|
-| rovers    |
-| elevators |
-| satellite |
-| driverlog |
-| freecell  |
 
-To specify heuristics, use the following format:
-```
-gradle <domain>-<heuristic>-<problem>
-```
-With the following heuristics:
-| Description                 | heuristic         |
-|-----------------------------|-------------------| 
-| Only goal serialisation     | **gs**            | 
-| Random                      | **gs-rand**       |  
-| Pre-planning RPG Ascending  | **gs-rpg-asc**    | 
-| Pre-planning RPG Descending | **gs-rpg-asc**    |
-| In-planning RPG Ascending   | **gs-in-rpg-asc** |
-| In-planning RPG Ascending   | **gs-in-rpg-asc** |
+The script's configured strategies cover the baseline, existing order, random order and pre-planning RPG variants. The in-planning variants are available through the Java CLI and Gradle tasks but are not included in that script's current strategy map.
 
+Historical analysis is available in [`performance_data/`](performance_data/), including [graphs](performance_data/graphs/) and the [analysis workbook](performance_data/Worksheet.xlsx).
 
-For most problems, the ``<problem>`` parameter is a number ranging from 1-20, but in the case of the Elevators domain, the ``<problem>`` parameter is specified as two numbers between 1-30 and 0-4 respectively, separated by a hyphen. For example, ``1-0, 1-4, ..., 30-0, 30-4``.
+## Attribution and licence
 
-The Freecell domain also has additional problems which can be specified using a similar format, but with numbers between 2-13 and 1-5 respectively. For example, ``2-1, 2-5, ..., 13-1, 13-5``.
-
----
-## Testing
-
-Packaged with the source code is the test script ``run_tests.py`` used to gather performance data. The script has a suite of functions which can be used in varying ways to test domains and record the data produced. 
-
-**Please note that this script is not a command-line tool and must be modified as required prior to execution.**
+This project builds on the open-source **JavaFF 2.1** planner. Existing source attribution is retained. The planner's licence is included in [`gsFF/LICENSE`](gsFF/LICENSE).
